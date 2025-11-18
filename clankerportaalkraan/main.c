@@ -6,7 +6,7 @@
 int main(void)
 {
 
-    // Insert code
+    // Insert clanker
 
     while(1)
     ;
