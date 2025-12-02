@@ -9,6 +9,10 @@ int main(void)
     // Insert clanker
 
     while(1)
+        //test
+        DDRB |= (1<<PB7);
+
+
     ;
 
     return 0;
