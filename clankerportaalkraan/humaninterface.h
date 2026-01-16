@@ -73,6 +73,7 @@ void verwerkToets(char t)
 int mainhumaninterface(void) // display code
 {
     int i = 1;
+    int stap = 0;
 
     DDRA = 0x7F;      // output
 

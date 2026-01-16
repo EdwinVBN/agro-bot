@@ -3,31 +3,31 @@ bin\Debug\clankerportaalkraan.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000076  00800200  00001046  000010fa  2**0
+  0 .data         00000076  00800200  0000103e  000010f2  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00001046  00000000  00000000  000000b4  2**1
+  1 .text         0000103e  00000000  00000000  000000b4  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000011  00800276  00800276  00001170  2**0
+  2 .bss          00000011  00800276  00800276  00001168  2**0
                   ALLOC
-  3 .fuse         00000003  00820000  00820000  00001170  2**0
+  3 .fuse         00000003  00820000  00820000  00001168  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .comment      00000012  00000000  00000000  00001173  2**0
+  4 .comment      00000012  00000000  00000000  0000116b  2**0
                   CONTENTS, READONLY
-  5 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00001188  2**2
+  5 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00001180  2**2
                   CONTENTS, READONLY, OCTETS
-  6 .debug_aranges 00000098  00000000  00000000  000011c8  2**3
+  6 .debug_aranges 00000098  00000000  00000000  000011c0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
-  7 .debug_info   0000115c  00000000  00000000  00001260  2**0
+  7 .debug_info   0000114d  00000000  00000000  00001258  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
-  8 .debug_abbrev 00000d56  00000000  00000000  000023bc  2**0
+  8 .debug_abbrev 00000d56  00000000  00000000  000023a5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
-  9 .debug_line   000012a5  00000000  00000000  00003112  2**0
+  9 .debug_line   0000129d  00000000  00000000  000030fb  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 10 .debug_frame  00000334  00000000  00000000  000043b8  2**2
+ 10 .debug_frame  00000334  00000000  00000000  00004398  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 11 .debug_str    000006d7  00000000  00000000  000046ec  2**0
+ 11 .debug_str    000006d7  00000000  00000000  000046cc  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 12 .debug_line_str 00000150  00000000  00000000  00004dc3  2**0
+ 12 .debug_line_str 00000150  00000000  00000000  00004da3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -111,7 +111,7 @@ Disassembly of section .text:
       f8:	b2 e0       	ldi	r27, 0x02	; 2
 
 000000fa <.Loc.3>:
-      fa:	e6 e4       	ldi	r30, 0x46	; 70
+      fa:	ee e3       	ldi	r30, 0x3E	; 62
 
 000000fc <.Loc.4>:
       fc:	f0 e1       	ldi	r31, 0x10	; 16
@@ -165,8 +165,8 @@ Disassembly of section .text:
      11c:	e1 f7       	brne	.-8      	; 0x116 <.Loc.4>
 
 0000011e <L0^A>:
-     11e:	0e 94 e0 07 	call	0xfc0	; 0xfc0 <main>
-     122:	0c 94 21 08 	jmp	0x1042	; 0x1042 <_exit>
+     11e:	0e 94 e4 07 	call	0xfc8	; 0xfc8 <main>
+     122:	0c 94 1d 08 	jmp	0x103a	; 0x103a <_exit>
 
 00000126 <__bad_interrupt>:
      126:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -1637,7 +1637,9 @@ int mainhumaninterface(void) // display code
 {
      7dc:	cf 93       	push	r28
      7de:	df 93       	push	r29
-     7e0:	0f 92       	push	r0
+     7e0:	00 d0       	rcall	.+0      	; 0x7e2 <L0^A>
+
+000007e2 <L0^A>:
      7e2:	0f 92       	push	r0
      7e4:	cd b7       	in	r28, 0x3d	; 61
      7e6:	de b7       	in	r29, 0x3e	; 62
@@ -1650,1738 +1652,1726 @@ int mainhumaninterface(void) // display code
      7ee:	89 83       	std	Y+1, r24	; 0x01
 
 000007f0 <.Loc.221>:
-
-    DDRA = 0x7F;      // output
-     7f0:	81 e2       	ldi	r24, 0x21	; 33
-     7f2:	90 e0       	ldi	r25, 0x00	; 0
+    int stap = 0;
+     7f0:	1c 82       	std	Y+4, r1	; 0x04
+     7f2:	1b 82       	std	Y+3, r1	; 0x03
 
 000007f4 <.Loc.222>:
-     7f4:	2f e7       	ldi	r18, 0x7F	; 127
-     7f6:	fc 01       	movw	r30, r24
-     7f8:	20 83       	st	Z, r18
 
-000007fa <.Loc.223>:
+    DDRA = 0x7F;      // output
+     7f4:	81 e2       	ldi	r24, 0x21	; 33
+     7f6:	90 e0       	ldi	r25, 0x00	; 0
+
+000007f8 <.Loc.223>:
+     7f8:	2f e7       	ldi	r18, 0x7F	; 127
+     7fa:	fc 01       	movw	r30, r24
+     7fc:	20 83       	st	Z, r18
+
+000007fe <.Loc.224>:
 
     // Keypad invoer
     DDRK = 0x0F;      // output rijen
-     7fa:	87 e0       	ldi	r24, 0x07	; 7
-     7fc:	91 e0       	ldi	r25, 0x01	; 1
+     7fe:	87 e0       	ldi	r24, 0x07	; 7
+     800:	91 e0       	ldi	r25, 0x01	; 1
 
-000007fe <.Loc.224>:
-     7fe:	2f e0       	ldi	r18, 0x0F	; 15
-     800:	fc 01       	movw	r30, r24
-     802:	20 83       	st	Z, r18
-
-00000804 <.Loc.225>:
-    PORTK = 0xF0;     // pull-up van kolommen
-     804:	88 e0       	ldi	r24, 0x08	; 8
-     806:	91 e0       	ldi	r25, 0x01	; 1
+00000802 <.Loc.225>:
+     802:	2f e0       	ldi	r18, 0x0F	; 15
+     804:	fc 01       	movw	r30, r24
+     806:	20 83       	st	Z, r18
 
 00000808 <.Loc.226>:
-     808:	20 ef       	ldi	r18, 0xF0	; 240
-     80a:	fc 01       	movw	r30, r24
-     80c:	20 83       	st	Z, r18
+    PORTK = 0xF0;     // pull-up van kolommen
+     808:	88 e0       	ldi	r24, 0x08	; 8
+     80a:	91 e0       	ldi	r25, 0x01	; 1
 
-0000080e <.Loc.227>:
+0000080c <.Loc.227>:
+     80c:	20 ef       	ldi	r18, 0xF0	; 240
+     80e:	fc 01       	movw	r30, r24
+     810:	20 83       	st	Z, r18
+
+00000812 <.Loc.228>:
 
     while (i)
-     80e:	18 c0       	rjmp	.+48     	; 0x840 <.L30>
+     812:	18 c0       	rjmp	.+48     	; 0x844 <.L30>
 
-00000810 <.L33>:
+00000814 <.L33>:
     {
         toets = scanKeypad();
-     810:	0e 94 20 03 	call	0x640	; 0x640 <scanKeypad>
-
-00000814 <.Loc.229>:
-     814:	80 93 7e 02 	sts	0x027E, r24	; 0x80027e <toets>
+     814:	0e 94 20 03 	call	0x640	; 0x640 <scanKeypad>
 
 00000818 <.Loc.230>:
-        if (toets != 0)
-     818:	80 91 7e 02 	lds	r24, 0x027E	; 0x80027e <toets>
+     818:	80 93 7e 02 	sts	0x027E, r24	; 0x80027e <toets>
 
 0000081c <.Loc.231>:
-     81c:	88 23       	and	r24, r24
-     81e:	21 f0       	breq	.+8      	; 0x828 <.L31>
+        if (toets != 0)
+     81c:	80 91 7e 02 	lds	r24, 0x027E	; 0x80027e <toets>
 
 00000820 <.Loc.232>:
+     820:	88 23       	and	r24, r24
+     822:	21 f0       	breq	.+8      	; 0x82c <.L31>
+
+00000824 <.Loc.233>:
         {
             verwerkToets(toets);
-     820:	80 91 7e 02 	lds	r24, 0x027E	; 0x80027e <toets>
-     824:	0e 94 8b 03 	call	0x716	; 0x716 <verwerkToets>
+     824:	80 91 7e 02 	lds	r24, 0x027E	; 0x80027e <toets>
+     828:	0e 94 8b 03 	call	0x716	; 0x716 <verwerkToets>
 
-00000828 <.L31>:
+0000082c <.L31>:
         }
 
         if (PINK & (1 << PK6))
-     828:	86 e0       	ldi	r24, 0x06	; 6
-     82a:	91 e0       	ldi	r25, 0x01	; 1
-     82c:	fc 01       	movw	r30, r24
-     82e:	80 81       	ld	r24, Z
+     82c:	86 e0       	ldi	r24, 0x06	; 6
+     82e:	91 e0       	ldi	r25, 0x01	; 1
+     830:	fc 01       	movw	r30, r24
+     832:	80 81       	ld	r24, Z
 
-00000830 <.Loc.234>:
-     830:	88 2f       	mov	r24, r24
-     832:	90 e0       	ldi	r25, 0x00	; 0
-     834:	80 74       	andi	r24, 0x40	; 64
-     836:	99 27       	eor	r25, r25
-
-00000838 <.Loc.235>:
-     838:	00 97       	sbiw	r24, 0x00	; 0
-     83a:	11 f0       	breq	.+4      	; 0x840 <.L30>
+00000834 <.Loc.235>:
+     834:	88 2f       	mov	r24, r24
+     836:	90 e0       	ldi	r25, 0x00	; 0
+     838:	80 74       	andi	r24, 0x40	; 64
+     83a:	99 27       	eor	r25, r25
 
 0000083c <.Loc.236>:
+     83c:	00 97       	sbiw	r24, 0x00	; 0
+     83e:	11 f0       	breq	.+4      	; 0x844 <.L30>
+
+00000840 <.Loc.237>:
         {
             i = 0;
-     83c:	1a 82       	std	Y+2, r1	; 0x02
-     83e:	19 82       	std	Y+1, r1	; 0x01
+     840:	1a 82       	std	Y+2, r1	; 0x02
+     842:	19 82       	std	Y+1, r1	; 0x01
 
-00000840 <.L30>:
+00000844 <.L30>:
     while (i)
-     840:	89 81       	ldd	r24, Y+1	; 0x01
-     842:	9a 81       	ldd	r25, Y+2	; 0x02
-     844:	00 97       	sbiw	r24, 0x00	; 0
-     846:	21 f7       	brne	.-56     	; 0x810 <.L33>
+     844:	89 81       	ldd	r24, Y+1	; 0x01
+     846:	9a 81       	ldd	r25, Y+2	; 0x02
+     848:	00 97       	sbiw	r24, 0x00	; 0
+     84a:	21 f7       	brne	.-56     	; 0x814 <.L33>
 
-00000848 <.Loc.238>:
+0000084c <.Loc.239>:
         }
     }
 }
-     848:	00 00       	nop
-     84a:	0f 90       	pop	r0
-     84c:	0f 90       	pop	r0
-     84e:	df 91       	pop	r29
-     850:	cf 91       	pop	r28
-     852:	08 95       	ret
+     84c:	00 00       	nop
+     84e:	0f 90       	pop	r0
+     850:	0f 90       	pop	r0
+     852:	0f 90       	pop	r0
+     854:	0f 90       	pop	r0
+     856:	df 91       	pop	r29
+     858:	cf 91       	pop	r28
+     85a:	08 95       	ret
 
-00000854 <confic>:
+0000085c <confic>:
 #include "magneet.h"
 #include "humaninterface.h"
 
 
 void confic(void) // Laat alle confics runnen om PORTS en DDRS te veranderen
 {
-     854:	cf 93       	push	r28
-     856:	df 93       	push	r29
-     858:	cd b7       	in	r28, 0x3d	; 61
-     85a:	de b7       	in	r29, 0x3e	; 62
+     85c:	cf 93       	push	r28
+     85e:	df 93       	push	r29
+     860:	cd b7       	in	r28, 0x3d	; 61
+     862:	de b7       	in	r29, 0x3e	; 62
 
-0000085c <.Loc.240>:
+00000864 <.Loc.241>:
     knopconfic();
-     85c:	0e 94 3c 04 	call	0x878	; 0x878 <knopconfic>
+     864:	0e 94 40 04 	call	0x880	; 0x880 <knopconfic>
 
-00000860 <.Loc.241>:
+00000868 <.Loc.242>:
     xmotorconfic();
-     860:	0e 94 95 00 	call	0x12a	; 0x12a <xmotorconfic>
+     868:	0e 94 95 00 	call	0x12a	; 0x12a <xmotorconfic>
 
-00000864 <.Loc.242>:
+0000086c <.Loc.243>:
     ymotorconfic();
-     864:	0e 94 e5 00 	call	0x1ca	; 0x1ca <ymotorconfic>
+     86c:	0e 94 e5 00 	call	0x1ca	; 0x1ca <ymotorconfic>
 
-00000868 <.Loc.243>:
+00000870 <.Loc.244>:
     zmotorconfic();
-     868:	0e 94 35 01 	call	0x26a	; 0x26a <zmotorconfic>
+     870:	0e 94 35 01 	call	0x26a	; 0x26a <zmotorconfic>
 
-0000086c <.Loc.244>:
+00000874 <.Loc.245>:
     magneetconfic();
-     86c:	0e 94 e4 02 	call	0x5c8	; 0x5c8 <magneetconfic>
+     874:	0e 94 e4 02 	call	0x5c8	; 0x5c8 <magneetconfic>
 
-00000870 <.Loc.245>:
+00000878 <.Loc.246>:
 }
-     870:	00 00       	nop
-     872:	df 91       	pop	r29
-     874:	cf 91       	pop	r28
-     876:	08 95       	ret
+     878:	00 00       	nop
+     87a:	df 91       	pop	r29
+     87c:	cf 91       	pop	r28
+     87e:	08 95       	ret
 
-00000878 <knopconfic>:
+00000880 <knopconfic>:
 
 void knopconfic(void)// maakt alle knoppen inputs
 {
-     878:	cf 93       	push	r28
-     87a:	df 93       	push	r29
-     87c:	cd b7       	in	r28, 0x3d	; 61
-     87e:	de b7       	in	r29, 0x3e	; 62
-
-00000880 <.Loc.247>:
-DDRK &= ~(1 << PK1); // knoppen x as
-     880:	87 e0       	ldi	r24, 0x07	; 7
-     882:	91 e0       	ldi	r25, 0x01	; 1
-     884:	fc 01       	movw	r30, r24
-     886:	20 81       	ld	r18, Z
+     880:	cf 93       	push	r28
+     882:	df 93       	push	r29
+     884:	cd b7       	in	r28, 0x3d	; 61
+     886:	de b7       	in	r29, 0x3e	; 62
 
 00000888 <.Loc.248>:
+DDRK &= ~(1 << PK1); // knoppen x as
      888:	87 e0       	ldi	r24, 0x07	; 7
      88a:	91 e0       	ldi	r25, 0x01	; 1
+     88c:	fc 01       	movw	r30, r24
+     88e:	20 81       	ld	r18, Z
 
-0000088c <.Loc.249>:
-     88c:	2d 7f       	andi	r18, 0xFD	; 253
-     88e:	fc 01       	movw	r30, r24
-     890:	20 83       	st	Z, r18
+00000890 <.Loc.249>:
+     890:	87 e0       	ldi	r24, 0x07	; 7
+     892:	91 e0       	ldi	r25, 0x01	; 1
 
-00000892 <.Loc.250>:
-DDRK &= ~(1 << PK2);
-     892:	87 e0       	ldi	r24, 0x07	; 7
-     894:	91 e0       	ldi	r25, 0x01	; 1
+00000894 <.Loc.250>:
+     894:	2d 7f       	andi	r18, 0xFD	; 253
      896:	fc 01       	movw	r30, r24
-     898:	20 81       	ld	r18, Z
+     898:	20 83       	st	Z, r18
 
 0000089a <.Loc.251>:
+DDRK &= ~(1 << PK2);
      89a:	87 e0       	ldi	r24, 0x07	; 7
      89c:	91 e0       	ldi	r25, 0x01	; 1
+     89e:	fc 01       	movw	r30, r24
+     8a0:	20 81       	ld	r18, Z
 
-0000089e <.Loc.252>:
-     89e:	2b 7f       	andi	r18, 0xFB	; 251
-     8a0:	fc 01       	movw	r30, r24
-     8a2:	20 83       	st	Z, r18
+000008a2 <.Loc.252>:
+     8a2:	87 e0       	ldi	r24, 0x07	; 7
+     8a4:	91 e0       	ldi	r25, 0x01	; 1
 
-000008a4 <.Loc.253>:
-DDRK &= ~(1 << PK3);
-     8a4:	87 e0       	ldi	r24, 0x07	; 7
-     8a6:	91 e0       	ldi	r25, 0x01	; 1
+000008a6 <.Loc.253>:
+     8a6:	2b 7f       	andi	r18, 0xFB	; 251
      8a8:	fc 01       	movw	r30, r24
-     8aa:	20 81       	ld	r18, Z
+     8aa:	20 83       	st	Z, r18
 
 000008ac <.Loc.254>:
+DDRK &= ~(1 << PK3);
      8ac:	87 e0       	ldi	r24, 0x07	; 7
      8ae:	91 e0       	ldi	r25, 0x01	; 1
+     8b0:	fc 01       	movw	r30, r24
+     8b2:	20 81       	ld	r18, Z
 
-000008b0 <.Loc.255>:
-     8b0:	27 7f       	andi	r18, 0xF7	; 247
-     8b2:	fc 01       	movw	r30, r24
-     8b4:	20 83       	st	Z, r18
+000008b4 <.Loc.255>:
+     8b4:	87 e0       	ldi	r24, 0x07	; 7
+     8b6:	91 e0       	ldi	r25, 0x01	; 1
 
-000008b6 <.Loc.256>:
-DDRK &= ~(1 << PK4);
-     8b6:	87 e0       	ldi	r24, 0x07	; 7
-     8b8:	91 e0       	ldi	r25, 0x01	; 1
+000008b8 <.Loc.256>:
+     8b8:	27 7f       	andi	r18, 0xF7	; 247
      8ba:	fc 01       	movw	r30, r24
-     8bc:	20 81       	ld	r18, Z
+     8bc:	20 83       	st	Z, r18
 
 000008be <.Loc.257>:
+DDRK &= ~(1 << PK4);
      8be:	87 e0       	ldi	r24, 0x07	; 7
      8c0:	91 e0       	ldi	r25, 0x01	; 1
+     8c2:	fc 01       	movw	r30, r24
+     8c4:	20 81       	ld	r18, Z
 
-000008c2 <.Loc.258>:
-     8c2:	2f 7e       	andi	r18, 0xEF	; 239
-     8c4:	fc 01       	movw	r30, r24
-     8c6:	20 83       	st	Z, r18
+000008c6 <.Loc.258>:
+     8c6:	87 e0       	ldi	r24, 0x07	; 7
+     8c8:	91 e0       	ldi	r25, 0x01	; 1
 
-000008c8 <.Loc.259>:
-DDRK &= ~(1 << PK5);
-     8c8:	87 e0       	ldi	r24, 0x07	; 7
-     8ca:	91 e0       	ldi	r25, 0x01	; 1
+000008ca <.Loc.259>:
+     8ca:	2f 7e       	andi	r18, 0xEF	; 239
      8cc:	fc 01       	movw	r30, r24
-     8ce:	20 81       	ld	r18, Z
+     8ce:	20 83       	st	Z, r18
 
 000008d0 <.Loc.260>:
+DDRK &= ~(1 << PK5);
      8d0:	87 e0       	ldi	r24, 0x07	; 7
      8d2:	91 e0       	ldi	r25, 0x01	; 1
+     8d4:	fc 01       	movw	r30, r24
+     8d6:	20 81       	ld	r18, Z
 
-000008d4 <.Loc.261>:
-     8d4:	2f 7d       	andi	r18, 0xDF	; 223
-     8d6:	fc 01       	movw	r30, r24
-     8d8:	20 83       	st	Z, r18
+000008d8 <.Loc.261>:
+     8d8:	87 e0       	ldi	r24, 0x07	; 7
+     8da:	91 e0       	ldi	r25, 0x01	; 1
 
-000008da <.Loc.262>:
-
-DDRE &= ~(1 << PL0); // knoppen y as
-     8da:	8d e2       	ldi	r24, 0x2D	; 45
-     8dc:	90 e0       	ldi	r25, 0x00	; 0
+000008dc <.Loc.262>:
+     8dc:	2f 7d       	andi	r18, 0xDF	; 223
      8de:	fc 01       	movw	r30, r24
-     8e0:	20 81       	ld	r18, Z
+     8e0:	20 83       	st	Z, r18
 
 000008e2 <.Loc.263>:
+
+DDRE &= ~(1 << PL0); // knoppen y as
      8e2:	8d e2       	ldi	r24, 0x2D	; 45
      8e4:	90 e0       	ldi	r25, 0x00	; 0
+     8e6:	fc 01       	movw	r30, r24
+     8e8:	20 81       	ld	r18, Z
 
-000008e6 <.Loc.264>:
-     8e6:	2e 7f       	andi	r18, 0xFE	; 254
-     8e8:	fc 01       	movw	r30, r24
-     8ea:	20 83       	st	Z, r18
+000008ea <.Loc.264>:
+     8ea:	8d e2       	ldi	r24, 0x2D	; 45
+     8ec:	90 e0       	ldi	r25, 0x00	; 0
 
-000008ec <.Loc.265>:
-DDRE &= ~(1 << PB3);
-     8ec:	8d e2       	ldi	r24, 0x2D	; 45
-     8ee:	90 e0       	ldi	r25, 0x00	; 0
+000008ee <.Loc.265>:
+     8ee:	2e 7f       	andi	r18, 0xFE	; 254
      8f0:	fc 01       	movw	r30, r24
-     8f2:	20 81       	ld	r18, Z
+     8f2:	20 83       	st	Z, r18
 
 000008f4 <.Loc.266>:
+DDRE &= ~(1 << PB3);
      8f4:	8d e2       	ldi	r24, 0x2D	; 45
      8f6:	90 e0       	ldi	r25, 0x00	; 0
+     8f8:	fc 01       	movw	r30, r24
+     8fa:	20 81       	ld	r18, Z
 
-000008f8 <.Loc.267>:
-     8f8:	27 7f       	andi	r18, 0xF7	; 247
-     8fa:	fc 01       	movw	r30, r24
-     8fc:	20 83       	st	Z, r18
+000008fc <.Loc.267>:
+     8fc:	8d e2       	ldi	r24, 0x2D	; 45
+     8fe:	90 e0       	ldi	r25, 0x00	; 0
 
-000008fe <.Loc.268>:
-DDRE &= ~(1 << PB2);
-     8fe:	8d e2       	ldi	r24, 0x2D	; 45
-     900:	90 e0       	ldi	r25, 0x00	; 0
+00000900 <.Loc.268>:
+     900:	27 7f       	andi	r18, 0xF7	; 247
      902:	fc 01       	movw	r30, r24
-     904:	20 81       	ld	r18, Z
+     904:	20 83       	st	Z, r18
 
 00000906 <.Loc.269>:
+DDRE &= ~(1 << PB2);
      906:	8d e2       	ldi	r24, 0x2D	; 45
      908:	90 e0       	ldi	r25, 0x00	; 0
+     90a:	fc 01       	movw	r30, r24
+     90c:	20 81       	ld	r18, Z
 
-0000090a <.Loc.270>:
-     90a:	2b 7f       	andi	r18, 0xFB	; 251
-     90c:	fc 01       	movw	r30, r24
-     90e:	20 83       	st	Z, r18
+0000090e <.Loc.270>:
+     90e:	8d e2       	ldi	r24, 0x2D	; 45
+     910:	90 e0       	ldi	r25, 0x00	; 0
 
-00000910 <.Loc.271>:
-DDRE &= ~(1 << PB1);
-     910:	8d e2       	ldi	r24, 0x2D	; 45
-     912:	90 e0       	ldi	r25, 0x00	; 0
+00000912 <.Loc.271>:
+     912:	2b 7f       	andi	r18, 0xFB	; 251
      914:	fc 01       	movw	r30, r24
-     916:	20 81       	ld	r18, Z
+     916:	20 83       	st	Z, r18
 
 00000918 <.Loc.272>:
+DDRE &= ~(1 << PB1);
      918:	8d e2       	ldi	r24, 0x2D	; 45
      91a:	90 e0       	ldi	r25, 0x00	; 0
+     91c:	fc 01       	movw	r30, r24
+     91e:	20 81       	ld	r18, Z
 
-0000091c <.Loc.273>:
-     91c:	2d 7f       	andi	r18, 0xFD	; 253
-     91e:	fc 01       	movw	r30, r24
-     920:	20 83       	st	Z, r18
+00000920 <.Loc.273>:
+     920:	8d e2       	ldi	r24, 0x2D	; 45
+     922:	90 e0       	ldi	r25, 0x00	; 0
 
-00000922 <.Loc.274>:
-DDRE &= ~(1 << PB0);
-     922:	8d e2       	ldi	r24, 0x2D	; 45
-     924:	90 e0       	ldi	r25, 0x00	; 0
+00000924 <.Loc.274>:
+     924:	2d 7f       	andi	r18, 0xFD	; 253
      926:	fc 01       	movw	r30, r24
-     928:	20 81       	ld	r18, Z
+     928:	20 83       	st	Z, r18
 
 0000092a <.Loc.275>:
+DDRE &= ~(1 << PB0);
      92a:	8d e2       	ldi	r24, 0x2D	; 45
      92c:	90 e0       	ldi	r25, 0x00	; 0
+     92e:	fc 01       	movw	r30, r24
+     930:	20 81       	ld	r18, Z
 
-0000092e <.Loc.276>:
-     92e:	2e 7f       	andi	r18, 0xFE	; 254
-     930:	fc 01       	movw	r30, r24
-     932:	20 83       	st	Z, r18
+00000932 <.Loc.276>:
+     932:	8d e2       	ldi	r24, 0x2D	; 45
+     934:	90 e0       	ldi	r25, 0x00	; 0
 
-00000934 <.Loc.277>:
+00000936 <.Loc.277>:
+     936:	2e 7f       	andi	r18, 0xFE	; 254
+     938:	fc 01       	movw	r30, r24
+     93a:	20 83       	st	Z, r18
+
+0000093c <.Loc.278>:
 
 }
-     934:	00 00       	nop
-     936:	df 91       	pop	r29
-     938:	cf 91       	pop	r28
-     93a:	08 95       	ret
+     93c:	00 00       	nop
+     93e:	df 91       	pop	r29
+     940:	cf 91       	pop	r28
+     942:	08 95       	ret
 
-0000093c <bewegingx>:
+00000944 <bewegingx>:
 int xbereikt = 0;
 int ybereikt = 0;
 int START = 1;
 
 void bewegingx(int LOCATIE) // brengt de x as naar de goede coordinaat
 {
-     93c:	cf 93       	push	r28
-     93e:	df 93       	push	r29
-     940:	cd b7       	in	r28, 0x3d	; 61
-     942:	de b7       	in	r29, 0x3e	; 62
-     944:	e6 97       	sbiw	r28, 0x36	; 54
-     946:	0f b6       	in	r0, 0x3f	; 63
-     948:	f8 94       	cli
-     94a:	de bf       	out	0x3e, r29	; 62
-     94c:	0f be       	out	0x3f, r0	; 63
-     94e:	cd bf       	out	0x3d, r28	; 61
-     950:	9e ab       	std	Y+54, r25	; 0x36
-     952:	8d ab       	std	Y+53, r24	; 0x35
+     944:	cf 93       	push	r28
+     946:	df 93       	push	r29
+     948:	cd b7       	in	r28, 0x3d	; 61
+     94a:	de b7       	in	r29, 0x3e	; 62
+     94c:	e6 97       	sbiw	r28, 0x36	; 54
+     94e:	0f b6       	in	r0, 0x3f	; 63
+     950:	f8 94       	cli
+     952:	de bf       	out	0x3e, r29	; 62
+     954:	0f be       	out	0x3f, r0	; 63
+     956:	cd bf       	out	0x3d, r28	; 61
+     958:	9e ab       	std	Y+54, r25	; 0x36
+     95a:	8d ab       	std	Y+53, r24	; 0x35
 
-00000954 <.Loc.279>:
+0000095c <.Loc.280>:
     int arrayknopx[25] =
-     954:	82 e3       	ldi	r24, 0x32	; 50
-     956:	e2 e1       	ldi	r30, 0x12	; 18
-     958:	f2 e0       	ldi	r31, 0x02	; 2
-     95a:	de 01       	movw	r26, r28
-     95c:	13 96       	adiw	r26, 0x03	; 3
+     95c:	82 e3       	ldi	r24, 0x32	; 50
+     95e:	e2 e1       	ldi	r30, 0x12	; 18
+     960:	f2 e0       	ldi	r31, 0x02	; 2
+     962:	de 01       	movw	r26, r28
+     964:	13 96       	adiw	r26, 0x03	; 3
 
-0000095e <.L^B1>:
-     95e:	01 90       	ld	r0, Z+
-     960:	0d 92       	st	X+, r0
-     962:	8a 95       	dec	r24
-     964:	e1 f7       	brne	.-8      	; 0x95e <.L^B1>
+00000966 <.L^B1>:
+     966:	01 90       	ld	r0, Z+
+     968:	0d 92       	st	X+, r0
+     96a:	8a 95       	dec	r24
+     96c:	e1 f7       	brne	.-8      	; 0x966 <.L^B1>
 
-00000966 <.Loc.280>:
+0000096e <.Loc.281>:
         3,3,3,3,3,
         4,4,4,4,4,
         5,5,5,5,5
     };
 
     int knopx = arrayknopx[LOCATIE - 1];
-     966:	8d a9       	ldd	r24, Y+53	; 0x35
-     968:	9e a9       	ldd	r25, Y+54	; 0x36
-     96a:	01 97       	sbiw	r24, 0x01	; 1
+     96e:	8d a9       	ldd	r24, Y+53	; 0x35
+     970:	9e a9       	ldd	r25, Y+54	; 0x36
+     972:	01 97       	sbiw	r24, 0x01	; 1
 
-0000096c <.Loc.281>:
-     96c:	88 0f       	add	r24, r24
-     96e:	99 1f       	adc	r25, r25
-     970:	9e 01       	movw	r18, r28
-     972:	2f 5f       	subi	r18, 0xFF	; 255
-     974:	3f 4f       	sbci	r19, 0xFF	; 255
-     976:	82 0f       	add	r24, r18
-     978:	93 1f       	adc	r25, r19
-     97a:	02 96       	adiw	r24, 0x02	; 2
-     97c:	fc 01       	movw	r30, r24
-     97e:	80 81       	ld	r24, Z
-     980:	91 81       	ldd	r25, Z+1	; 0x01
-     982:	9a 83       	std	Y+2, r25	; 0x02
-     984:	89 83       	std	Y+1, r24	; 0x01
+00000974 <.Loc.282>:
+     974:	88 0f       	add	r24, r24
+     976:	99 1f       	adc	r25, r25
+     978:	9e 01       	movw	r18, r28
+     97a:	2f 5f       	subi	r18, 0xFF	; 255
+     97c:	3f 4f       	sbci	r19, 0xFF	; 255
+     97e:	82 0f       	add	r24, r18
+     980:	93 1f       	adc	r25, r19
+     982:	02 96       	adiw	r24, 0x02	; 2
+     984:	fc 01       	movw	r30, r24
+     986:	80 81       	ld	r24, Z
+     988:	91 81       	ldd	r25, Z+1	; 0x01
+     98a:	9a 83       	std	Y+2, r25	; 0x02
+     98c:	89 83       	std	Y+1, r24	; 0x01
 
-00000986 <.Loc.282>:
+0000098e <.Loc.283>:
     static int vorigestaatknopx = 0;
 
     // MOTOR POSITIEF
     if (knopx > vorigestaatknopx)
-     986:	80 91 83 02 	lds	r24, 0x0283	; 0x800283 <vorigestaatknopx.1>
-     98a:	90 91 84 02 	lds	r25, 0x0284	; 0x800284 <vorigestaatknopx.1+0x1>
+     98e:	80 91 83 02 	lds	r24, 0x0283	; 0x800283 <vorigestaatknopx.1>
+     992:	90 91 84 02 	lds	r25, 0x0284	; 0x800284 <vorigestaatknopx.1+0x1>
 
-0000098e <.Loc.283>:
-     98e:	29 81       	ldd	r18, Y+1	; 0x01
-     990:	3a 81       	ldd	r19, Y+2	; 0x02
-     992:	28 17       	cp	r18, r24
-     994:	39 07       	cpc	r19, r25
-     996:	09 f0       	breq	.+2      	; 0x99a <L0^A>
+00000996 <.Loc.284>:
+     996:	29 81       	ldd	r18, Y+1	; 0x01
+     998:	3a 81       	ldd	r19, Y+2	; 0x02
+     99a:	28 17       	cp	r18, r24
+     99c:	39 07       	cpc	r19, r25
+     99e:	09 f0       	breq	.+2      	; 0x9a2 <L0^A>
 
-00000998 <L0^A>:
-     998:	0c f4       	brge	.+2      	; 0x99c <.Loc.284>
+000009a0 <L0^A>:
+     9a0:	0c f4       	brge	.+2      	; 0x9a4 <.Loc.285>
 
-0000099a <L0^A>:
-     99a:	87 c0       	rjmp	.+270    	; 0xaaa <.L37>
+000009a2 <L0^A>:
+     9a2:	87 c0       	rjmp	.+270    	; 0xab2 <.L37>
 
-0000099c <.Loc.284>:
+000009a4 <.Loc.285>:
 
     {
         xbereikt = 0;
-     99c:	10 92 80 02 	sts	0x0280, r1	; 0x800280 <xbereikt+0x1>
-     9a0:	10 92 7f 02 	sts	0x027F, r1	; 0x80027f <xbereikt>
+     9a4:	10 92 80 02 	sts	0x0280, r1	; 0x800280 <xbereikt+0x1>
+     9a8:	10 92 7f 02 	sts	0x027F, r1	; 0x80027f <xbereikt>
 
-000009a4 <.Loc.285>:
+000009ac <.Loc.286>:
         while(xbereikt == 0)
-     9a4:	75 c0       	rjmp	.+234    	; 0xa90 <.L38>
+     9ac:	75 c0       	rjmp	.+234    	; 0xa98 <.L38>
 
-000009a6 <.L44>:
+000009ae <.L44>:
         {
         xmotorpositief();
-     9a6:	0e 94 85 01 	call	0x30a	; 0x30a <xmotorpositief>
+     9ae:	0e 94 85 01 	call	0x30a	; 0x30a <xmotorpositief>
 
-000009aa <.Loc.287>:
+000009b2 <.Loc.288>:
 
         if (knopx == 1 && (PINK & (1 << PK1))){xmotoruit(); xbereikt = 1;}
-     9aa:	89 81       	ldd	r24, Y+1	; 0x01
-     9ac:	9a 81       	ldd	r25, Y+2	; 0x02
-     9ae:	81 30       	cpi	r24, 0x01	; 1
-     9b0:	91 05       	cpc	r25, r1
-     9b2:	91 f4       	brne	.+36     	; 0x9d8 <.L39>
-
-000009b4 <.Loc.288>:
-     9b4:	86 e0       	ldi	r24, 0x06	; 6
-     9b6:	91 e0       	ldi	r25, 0x01	; 1
-     9b8:	fc 01       	movw	r30, r24
-     9ba:	80 81       	ld	r24, Z
+     9b2:	89 81       	ldd	r24, Y+1	; 0x01
+     9b4:	9a 81       	ldd	r25, Y+2	; 0x02
+     9b6:	81 30       	cpi	r24, 0x01	; 1
+     9b8:	91 05       	cpc	r25, r1
+     9ba:	91 f4       	brne	.+36     	; 0x9e0 <.L39>
 
 000009bc <.Loc.289>:
-     9bc:	88 2f       	mov	r24, r24
-     9be:	90 e0       	ldi	r25, 0x00	; 0
-     9c0:	82 70       	andi	r24, 0x02	; 2
-     9c2:	99 27       	eor	r25, r25
+     9bc:	86 e0       	ldi	r24, 0x06	; 6
+     9be:	91 e0       	ldi	r25, 0x01	; 1
+     9c0:	fc 01       	movw	r30, r24
+     9c2:	80 81       	ld	r24, Z
 
 000009c4 <.Loc.290>:
-     9c4:	00 97       	sbiw	r24, 0x00	; 0
-     9c6:	41 f0       	breq	.+16     	; 0x9d8 <.L39>
+     9c4:	88 2f       	mov	r24, r24
+     9c6:	90 e0       	ldi	r25, 0x00	; 0
+     9c8:	82 70       	andi	r24, 0x02	; 2
+     9ca:	99 27       	eor	r25, r25
 
-000009c8 <.Loc.291>:
-     9c8:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
+000009cc <.Loc.291>:
+     9cc:	00 97       	sbiw	r24, 0x00	; 0
+     9ce:	41 f0       	breq	.+16     	; 0x9e0 <.L39>
 
-000009cc <.Loc.292>:
-     9cc:	81 e0       	ldi	r24, 0x01	; 1
-     9ce:	90 e0       	ldi	r25, 0x00	; 0
-     9d0:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
-     9d4:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+000009d0 <.Loc.292>:
+     9d0:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
 
-000009d8 <.L39>:
+000009d4 <.Loc.293>:
+     9d4:	81 e0       	ldi	r24, 0x01	; 1
+     9d6:	90 e0       	ldi	r25, 0x00	; 0
+     9d8:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
+     9dc:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+
+000009e0 <.L39>:
         if (knopx == 2 && (PINK & (1 << PK2))){xmotoruit(); xbereikt = 1;}
-     9d8:	89 81       	ldd	r24, Y+1	; 0x01
-     9da:	9a 81       	ldd	r25, Y+2	; 0x02
-     9dc:	82 30       	cpi	r24, 0x02	; 2
-     9de:	91 05       	cpc	r25, r1
-     9e0:	91 f4       	brne	.+36     	; 0xa06 <.L40>
-
-000009e2 <.Loc.294>:
-     9e2:	86 e0       	ldi	r24, 0x06	; 6
-     9e4:	91 e0       	ldi	r25, 0x01	; 1
-     9e6:	fc 01       	movw	r30, r24
-     9e8:	80 81       	ld	r24, Z
+     9e0:	89 81       	ldd	r24, Y+1	; 0x01
+     9e2:	9a 81       	ldd	r25, Y+2	; 0x02
+     9e4:	82 30       	cpi	r24, 0x02	; 2
+     9e6:	91 05       	cpc	r25, r1
+     9e8:	91 f4       	brne	.+36     	; 0xa0e <.L40>
 
 000009ea <.Loc.295>:
-     9ea:	88 2f       	mov	r24, r24
-     9ec:	90 e0       	ldi	r25, 0x00	; 0
-     9ee:	84 70       	andi	r24, 0x04	; 4
-     9f0:	99 27       	eor	r25, r25
+     9ea:	86 e0       	ldi	r24, 0x06	; 6
+     9ec:	91 e0       	ldi	r25, 0x01	; 1
+     9ee:	fc 01       	movw	r30, r24
+     9f0:	80 81       	ld	r24, Z
 
 000009f2 <.Loc.296>:
-     9f2:	00 97       	sbiw	r24, 0x00	; 0
-     9f4:	41 f0       	breq	.+16     	; 0xa06 <.L40>
+     9f2:	88 2f       	mov	r24, r24
+     9f4:	90 e0       	ldi	r25, 0x00	; 0
+     9f6:	84 70       	andi	r24, 0x04	; 4
+     9f8:	99 27       	eor	r25, r25
 
-000009f6 <.Loc.297>:
-     9f6:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
+000009fa <.Loc.297>:
+     9fa:	00 97       	sbiw	r24, 0x00	; 0
+     9fc:	41 f0       	breq	.+16     	; 0xa0e <.L40>
 
-000009fa <.Loc.298>:
-     9fa:	81 e0       	ldi	r24, 0x01	; 1
-     9fc:	90 e0       	ldi	r25, 0x00	; 0
-     9fe:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
-     a02:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+000009fe <.Loc.298>:
+     9fe:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
 
-00000a06 <.L40>:
+00000a02 <.Loc.299>:
+     a02:	81 e0       	ldi	r24, 0x01	; 1
+     a04:	90 e0       	ldi	r25, 0x00	; 0
+     a06:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
+     a0a:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+
+00000a0e <.L40>:
         if (knopx == 3 && (PINK & (1 << PK3))){xmotoruit(); xbereikt = 1;}
-     a06:	89 81       	ldd	r24, Y+1	; 0x01
-     a08:	9a 81       	ldd	r25, Y+2	; 0x02
-     a0a:	83 30       	cpi	r24, 0x03	; 3
-     a0c:	91 05       	cpc	r25, r1
-     a0e:	91 f4       	brne	.+36     	; 0xa34 <.L41>
-
-00000a10 <.Loc.300>:
-     a10:	86 e0       	ldi	r24, 0x06	; 6
-     a12:	91 e0       	ldi	r25, 0x01	; 1
-     a14:	fc 01       	movw	r30, r24
-     a16:	80 81       	ld	r24, Z
+     a0e:	89 81       	ldd	r24, Y+1	; 0x01
+     a10:	9a 81       	ldd	r25, Y+2	; 0x02
+     a12:	83 30       	cpi	r24, 0x03	; 3
+     a14:	91 05       	cpc	r25, r1
+     a16:	91 f4       	brne	.+36     	; 0xa3c <.L41>
 
 00000a18 <.Loc.301>:
-     a18:	88 2f       	mov	r24, r24
-     a1a:	90 e0       	ldi	r25, 0x00	; 0
-     a1c:	88 70       	andi	r24, 0x08	; 8
-     a1e:	99 27       	eor	r25, r25
+     a18:	86 e0       	ldi	r24, 0x06	; 6
+     a1a:	91 e0       	ldi	r25, 0x01	; 1
+     a1c:	fc 01       	movw	r30, r24
+     a1e:	80 81       	ld	r24, Z
 
 00000a20 <.Loc.302>:
-     a20:	00 97       	sbiw	r24, 0x00	; 0
-     a22:	41 f0       	breq	.+16     	; 0xa34 <.L41>
+     a20:	88 2f       	mov	r24, r24
+     a22:	90 e0       	ldi	r25, 0x00	; 0
+     a24:	88 70       	andi	r24, 0x08	; 8
+     a26:	99 27       	eor	r25, r25
 
-00000a24 <.Loc.303>:
-     a24:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
+00000a28 <.Loc.303>:
+     a28:	00 97       	sbiw	r24, 0x00	; 0
+     a2a:	41 f0       	breq	.+16     	; 0xa3c <.L41>
 
-00000a28 <.Loc.304>:
-     a28:	81 e0       	ldi	r24, 0x01	; 1
-     a2a:	90 e0       	ldi	r25, 0x00	; 0
-     a2c:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
-     a30:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+00000a2c <.Loc.304>:
+     a2c:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
 
-00000a34 <.L41>:
+00000a30 <.Loc.305>:
+     a30:	81 e0       	ldi	r24, 0x01	; 1
+     a32:	90 e0       	ldi	r25, 0x00	; 0
+     a34:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
+     a38:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+
+00000a3c <.L41>:
         if (knopx == 4 && (PINK & (1 << PK4))){xmotoruit(); xbereikt = 1;}
-     a34:	89 81       	ldd	r24, Y+1	; 0x01
-     a36:	9a 81       	ldd	r25, Y+2	; 0x02
-     a38:	84 30       	cpi	r24, 0x04	; 4
-     a3a:	91 05       	cpc	r25, r1
-     a3c:	91 f4       	brne	.+36     	; 0xa62 <.L42>
-
-00000a3e <.Loc.306>:
-     a3e:	86 e0       	ldi	r24, 0x06	; 6
-     a40:	91 e0       	ldi	r25, 0x01	; 1
-     a42:	fc 01       	movw	r30, r24
-     a44:	80 81       	ld	r24, Z
+     a3c:	89 81       	ldd	r24, Y+1	; 0x01
+     a3e:	9a 81       	ldd	r25, Y+2	; 0x02
+     a40:	84 30       	cpi	r24, 0x04	; 4
+     a42:	91 05       	cpc	r25, r1
+     a44:	91 f4       	brne	.+36     	; 0xa6a <.L42>
 
 00000a46 <.Loc.307>:
-     a46:	88 2f       	mov	r24, r24
-     a48:	90 e0       	ldi	r25, 0x00	; 0
-     a4a:	80 71       	andi	r24, 0x10	; 16
-     a4c:	99 27       	eor	r25, r25
+     a46:	86 e0       	ldi	r24, 0x06	; 6
+     a48:	91 e0       	ldi	r25, 0x01	; 1
+     a4a:	fc 01       	movw	r30, r24
+     a4c:	80 81       	ld	r24, Z
 
 00000a4e <.Loc.308>:
-     a4e:	00 97       	sbiw	r24, 0x00	; 0
-     a50:	41 f0       	breq	.+16     	; 0xa62 <.L42>
+     a4e:	88 2f       	mov	r24, r24
+     a50:	90 e0       	ldi	r25, 0x00	; 0
+     a52:	80 71       	andi	r24, 0x10	; 16
+     a54:	99 27       	eor	r25, r25
 
-00000a52 <.Loc.309>:
-     a52:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
+00000a56 <.Loc.309>:
+     a56:	00 97       	sbiw	r24, 0x00	; 0
+     a58:	41 f0       	breq	.+16     	; 0xa6a <.L42>
 
-00000a56 <.Loc.310>:
-     a56:	81 e0       	ldi	r24, 0x01	; 1
-     a58:	90 e0       	ldi	r25, 0x00	; 0
-     a5a:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
-     a5e:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+00000a5a <.Loc.310>:
+     a5a:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
 
-00000a62 <.L42>:
+00000a5e <.Loc.311>:
+     a5e:	81 e0       	ldi	r24, 0x01	; 1
+     a60:	90 e0       	ldi	r25, 0x00	; 0
+     a62:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
+     a66:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+
+00000a6a <.L42>:
         if (knopx == 5 && (PINK & (1 << PK5))){xmotoruit(); xbereikt = 1;}
-     a62:	89 81       	ldd	r24, Y+1	; 0x01
-     a64:	9a 81       	ldd	r25, Y+2	; 0x02
-     a66:	85 30       	cpi	r24, 0x05	; 5
-     a68:	91 05       	cpc	r25, r1
-     a6a:	91 f4       	brne	.+36     	; 0xa90 <.L38>
-
-00000a6c <.Loc.312>:
-     a6c:	86 e0       	ldi	r24, 0x06	; 6
-     a6e:	91 e0       	ldi	r25, 0x01	; 1
-     a70:	fc 01       	movw	r30, r24
-     a72:	80 81       	ld	r24, Z
+     a6a:	89 81       	ldd	r24, Y+1	; 0x01
+     a6c:	9a 81       	ldd	r25, Y+2	; 0x02
+     a6e:	85 30       	cpi	r24, 0x05	; 5
+     a70:	91 05       	cpc	r25, r1
+     a72:	91 f4       	brne	.+36     	; 0xa98 <.L38>
 
 00000a74 <.Loc.313>:
-     a74:	88 2f       	mov	r24, r24
-     a76:	90 e0       	ldi	r25, 0x00	; 0
-     a78:	80 72       	andi	r24, 0x20	; 32
-     a7a:	99 27       	eor	r25, r25
+     a74:	86 e0       	ldi	r24, 0x06	; 6
+     a76:	91 e0       	ldi	r25, 0x01	; 1
+     a78:	fc 01       	movw	r30, r24
+     a7a:	80 81       	ld	r24, Z
 
 00000a7c <.Loc.314>:
-     a7c:	00 97       	sbiw	r24, 0x00	; 0
-     a7e:	41 f0       	breq	.+16     	; 0xa90 <.L38>
+     a7c:	88 2f       	mov	r24, r24
+     a7e:	90 e0       	ldi	r25, 0x00	; 0
+     a80:	80 72       	andi	r24, 0x20	; 32
+     a82:	99 27       	eor	r25, r25
 
-00000a80 <.Loc.315>:
-     a80:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
+00000a84 <.Loc.315>:
+     a84:	00 97       	sbiw	r24, 0x00	; 0
+     a86:	41 f0       	breq	.+16     	; 0xa98 <.L38>
 
-00000a84 <.Loc.316>:
-     a84:	81 e0       	ldi	r24, 0x01	; 1
-     a86:	90 e0       	ldi	r25, 0x00	; 0
-     a88:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
-     a8c:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+00000a88 <.Loc.316>:
+     a88:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
 
-00000a90 <.L38>:
+00000a8c <.Loc.317>:
+     a8c:	81 e0       	ldi	r24, 0x01	; 1
+     a8e:	90 e0       	ldi	r25, 0x00	; 0
+     a90:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
+     a94:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+
+00000a98 <.L38>:
         while(xbereikt == 0)
-     a90:	80 91 7f 02 	lds	r24, 0x027F	; 0x80027f <xbereikt>
-     a94:	90 91 80 02 	lds	r25, 0x0280	; 0x800280 <xbereikt+0x1>
-     a98:	00 97       	sbiw	r24, 0x00	; 0
-     a9a:	09 f4       	brne	.+2      	; 0xa9e <.Loc.318>
+     a98:	80 91 7f 02 	lds	r24, 0x027F	; 0x80027f <xbereikt>
+     a9c:	90 91 80 02 	lds	r25, 0x0280	; 0x800280 <xbereikt+0x1>
+     aa0:	00 97       	sbiw	r24, 0x00	; 0
+     aa2:	09 f4       	brne	.+2      	; 0xaa6 <.Loc.319>
 
-00000a9c <L0^A>:
-     a9c:	84 cf       	rjmp	.-248    	; 0x9a6 <.L44>
+00000aa4 <L0^A>:
+     aa4:	84 cf       	rjmp	.-248    	; 0x9ae <.L44>
 
-00000a9e <.Loc.318>:
+00000aa6 <.Loc.319>:
         }
         vorigestaatknopx = knopx;
-     a9e:	89 81       	ldd	r24, Y+1	; 0x01
-     aa0:	9a 81       	ldd	r25, Y+2	; 0x02
-     aa2:	90 93 84 02 	sts	0x0284, r25	; 0x800284 <vorigestaatknopx.1+0x1>
-     aa6:	80 93 83 02 	sts	0x0283, r24	; 0x800283 <vorigestaatknopx.1>
+     aa6:	89 81       	ldd	r24, Y+1	; 0x01
+     aa8:	9a 81       	ldd	r25, Y+2	; 0x02
+     aaa:	90 93 84 02 	sts	0x0284, r25	; 0x800284 <vorigestaatknopx.1+0x1>
+     aae:	80 93 83 02 	sts	0x0283, r24	; 0x800283 <vorigestaatknopx.1>
 
-00000aaa <.L37>:
+00000ab2 <.L37>:
     }
 
     // MOTOR NEGATIEF
     if (knopx < vorigestaatknopx)
-     aaa:	80 91 83 02 	lds	r24, 0x0283	; 0x800283 <vorigestaatknopx.1>
-     aae:	90 91 84 02 	lds	r25, 0x0284	; 0x800284 <vorigestaatknopx.1+0x1>
+     ab2:	80 91 83 02 	lds	r24, 0x0283	; 0x800283 <vorigestaatknopx.1>
+     ab6:	90 91 84 02 	lds	r25, 0x0284	; 0x800284 <vorigestaatknopx.1+0x1>
 
-00000ab2 <.Loc.320>:
-     ab2:	29 81       	ldd	r18, Y+1	; 0x01
-     ab4:	3a 81       	ldd	r19, Y+2	; 0x02
-     ab6:	28 17       	cp	r18, r24
-     ab8:	39 07       	cpc	r19, r25
-     aba:	0c f0       	brlt	.+2      	; 0xabe <.Loc.321>
+00000aba <.Loc.321>:
+     aba:	29 81       	ldd	r18, Y+1	; 0x01
+     abc:	3a 81       	ldd	r19, Y+2	; 0x02
+     abe:	28 17       	cp	r18, r24
+     ac0:	39 07       	cpc	r19, r25
+     ac2:	0c f0       	brlt	.+2      	; 0xac6 <.Loc.322>
 
-00000abc <L0^A>:
-     abc:	87 c0       	rjmp	.+270    	; 0xbcc <.L53>
-
-00000abe <.Loc.321>:
-    {
-        xbereikt = 0;
-     abe:	10 92 80 02 	sts	0x0280, r1	; 0x800280 <xbereikt+0x1>
-     ac2:	10 92 7f 02 	sts	0x027F, r1	; 0x80027f <xbereikt>
+00000ac4 <L0^A>:
+     ac4:	87 c0       	rjmp	.+270    	; 0xbd4 <.L53>
 
 00000ac6 <.Loc.322>:
-        while(xbereikt == 0)
-     ac6:	75 c0       	rjmp	.+234    	; 0xbb2 <.L46>
+    {
+        xbereikt = 0;
+     ac6:	10 92 80 02 	sts	0x0280, r1	; 0x800280 <xbereikt+0x1>
+     aca:	10 92 7f 02 	sts	0x027F, r1	; 0x80027f <xbereikt>
 
-00000ac8 <.L52>:
+00000ace <.Loc.323>:
+        while(xbereikt == 0)
+     ace:	75 c0       	rjmp	.+234    	; 0xbba <.L46>
+
+00000ad0 <.L52>:
         {
         xmotornegatief();
-     ac8:	0e 94 cb 01 	call	0x396	; 0x396 <xmotornegatief>
+     ad0:	0e 94 cb 01 	call	0x396	; 0x396 <xmotornegatief>
 
-00000acc <.Loc.324>:
+00000ad4 <.Loc.325>:
         if (knopx == 1 && (PINK & (1 << PK1))){xmotoruit(); xbereikt = 1;}
-     acc:	89 81       	ldd	r24, Y+1	; 0x01
-     ace:	9a 81       	ldd	r25, Y+2	; 0x02
-     ad0:	81 30       	cpi	r24, 0x01	; 1
-     ad2:	91 05       	cpc	r25, r1
-     ad4:	91 f4       	brne	.+36     	; 0xafa <.L47>
-
-00000ad6 <.Loc.325>:
-     ad6:	86 e0       	ldi	r24, 0x06	; 6
-     ad8:	91 e0       	ldi	r25, 0x01	; 1
-     ada:	fc 01       	movw	r30, r24
-     adc:	80 81       	ld	r24, Z
+     ad4:	89 81       	ldd	r24, Y+1	; 0x01
+     ad6:	9a 81       	ldd	r25, Y+2	; 0x02
+     ad8:	81 30       	cpi	r24, 0x01	; 1
+     ada:	91 05       	cpc	r25, r1
+     adc:	91 f4       	brne	.+36     	; 0xb02 <.L47>
 
 00000ade <.Loc.326>:
-     ade:	88 2f       	mov	r24, r24
-     ae0:	90 e0       	ldi	r25, 0x00	; 0
-     ae2:	82 70       	andi	r24, 0x02	; 2
-     ae4:	99 27       	eor	r25, r25
+     ade:	86 e0       	ldi	r24, 0x06	; 6
+     ae0:	91 e0       	ldi	r25, 0x01	; 1
+     ae2:	fc 01       	movw	r30, r24
+     ae4:	80 81       	ld	r24, Z
 
 00000ae6 <.Loc.327>:
-     ae6:	00 97       	sbiw	r24, 0x00	; 0
-     ae8:	41 f0       	breq	.+16     	; 0xafa <.L47>
+     ae6:	88 2f       	mov	r24, r24
+     ae8:	90 e0       	ldi	r25, 0x00	; 0
+     aea:	82 70       	andi	r24, 0x02	; 2
+     aec:	99 27       	eor	r25, r25
 
-00000aea <.Loc.328>:
-     aea:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
+00000aee <.Loc.328>:
+     aee:	00 97       	sbiw	r24, 0x00	; 0
+     af0:	41 f0       	breq	.+16     	; 0xb02 <.L47>
 
-00000aee <.Loc.329>:
-     aee:	81 e0       	ldi	r24, 0x01	; 1
-     af0:	90 e0       	ldi	r25, 0x00	; 0
-     af2:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
-     af6:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+00000af2 <.Loc.329>:
+     af2:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
 
-00000afa <.L47>:
+00000af6 <.Loc.330>:
+     af6:	81 e0       	ldi	r24, 0x01	; 1
+     af8:	90 e0       	ldi	r25, 0x00	; 0
+     afa:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
+     afe:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+
+00000b02 <.L47>:
         if (knopx == 2 && (PINK & (1 << PK2))){xmotoruit(); xbereikt = 1;}
-     afa:	89 81       	ldd	r24, Y+1	; 0x01
-     afc:	9a 81       	ldd	r25, Y+2	; 0x02
-     afe:	82 30       	cpi	r24, 0x02	; 2
-     b00:	91 05       	cpc	r25, r1
-     b02:	91 f4       	brne	.+36     	; 0xb28 <.L48>
-
-00000b04 <.Loc.331>:
-     b04:	86 e0       	ldi	r24, 0x06	; 6
-     b06:	91 e0       	ldi	r25, 0x01	; 1
-     b08:	fc 01       	movw	r30, r24
-     b0a:	80 81       	ld	r24, Z
+     b02:	89 81       	ldd	r24, Y+1	; 0x01
+     b04:	9a 81       	ldd	r25, Y+2	; 0x02
+     b06:	82 30       	cpi	r24, 0x02	; 2
+     b08:	91 05       	cpc	r25, r1
+     b0a:	91 f4       	brne	.+36     	; 0xb30 <.L48>
 
 00000b0c <.Loc.332>:
-     b0c:	88 2f       	mov	r24, r24
-     b0e:	90 e0       	ldi	r25, 0x00	; 0
-     b10:	84 70       	andi	r24, 0x04	; 4
-     b12:	99 27       	eor	r25, r25
+     b0c:	86 e0       	ldi	r24, 0x06	; 6
+     b0e:	91 e0       	ldi	r25, 0x01	; 1
+     b10:	fc 01       	movw	r30, r24
+     b12:	80 81       	ld	r24, Z
 
 00000b14 <.Loc.333>:
-     b14:	00 97       	sbiw	r24, 0x00	; 0
-     b16:	41 f0       	breq	.+16     	; 0xb28 <.L48>
+     b14:	88 2f       	mov	r24, r24
+     b16:	90 e0       	ldi	r25, 0x00	; 0
+     b18:	84 70       	andi	r24, 0x04	; 4
+     b1a:	99 27       	eor	r25, r25
 
-00000b18 <.Loc.334>:
-     b18:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
+00000b1c <.Loc.334>:
+     b1c:	00 97       	sbiw	r24, 0x00	; 0
+     b1e:	41 f0       	breq	.+16     	; 0xb30 <.L48>
 
-00000b1c <.Loc.335>:
-     b1c:	81 e0       	ldi	r24, 0x01	; 1
-     b1e:	90 e0       	ldi	r25, 0x00	; 0
-     b20:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
-     b24:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+00000b20 <.Loc.335>:
+     b20:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
 
-00000b28 <.L48>:
+00000b24 <.Loc.336>:
+     b24:	81 e0       	ldi	r24, 0x01	; 1
+     b26:	90 e0       	ldi	r25, 0x00	; 0
+     b28:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
+     b2c:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+
+00000b30 <.L48>:
         if (knopx == 3 && (PINK & (1 << PK3))){xmotoruit(); xbereikt = 1;}
-     b28:	89 81       	ldd	r24, Y+1	; 0x01
-     b2a:	9a 81       	ldd	r25, Y+2	; 0x02
-     b2c:	83 30       	cpi	r24, 0x03	; 3
-     b2e:	91 05       	cpc	r25, r1
-     b30:	91 f4       	brne	.+36     	; 0xb56 <.L49>
-
-00000b32 <.Loc.337>:
-     b32:	86 e0       	ldi	r24, 0x06	; 6
-     b34:	91 e0       	ldi	r25, 0x01	; 1
-     b36:	fc 01       	movw	r30, r24
-     b38:	80 81       	ld	r24, Z
+     b30:	89 81       	ldd	r24, Y+1	; 0x01
+     b32:	9a 81       	ldd	r25, Y+2	; 0x02
+     b34:	83 30       	cpi	r24, 0x03	; 3
+     b36:	91 05       	cpc	r25, r1
+     b38:	91 f4       	brne	.+36     	; 0xb5e <.L49>
 
 00000b3a <.Loc.338>:
-     b3a:	88 2f       	mov	r24, r24
-     b3c:	90 e0       	ldi	r25, 0x00	; 0
-     b3e:	88 70       	andi	r24, 0x08	; 8
-     b40:	99 27       	eor	r25, r25
+     b3a:	86 e0       	ldi	r24, 0x06	; 6
+     b3c:	91 e0       	ldi	r25, 0x01	; 1
+     b3e:	fc 01       	movw	r30, r24
+     b40:	80 81       	ld	r24, Z
 
 00000b42 <.Loc.339>:
-     b42:	00 97       	sbiw	r24, 0x00	; 0
-     b44:	41 f0       	breq	.+16     	; 0xb56 <.L49>
+     b42:	88 2f       	mov	r24, r24
+     b44:	90 e0       	ldi	r25, 0x00	; 0
+     b46:	88 70       	andi	r24, 0x08	; 8
+     b48:	99 27       	eor	r25, r25
 
-00000b46 <.Loc.340>:
-     b46:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
+00000b4a <.Loc.340>:
+     b4a:	00 97       	sbiw	r24, 0x00	; 0
+     b4c:	41 f0       	breq	.+16     	; 0xb5e <.L49>
 
-00000b4a <.Loc.341>:
-     b4a:	81 e0       	ldi	r24, 0x01	; 1
-     b4c:	90 e0       	ldi	r25, 0x00	; 0
-     b4e:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
-     b52:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+00000b4e <.Loc.341>:
+     b4e:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
 
-00000b56 <.L49>:
+00000b52 <.Loc.342>:
+     b52:	81 e0       	ldi	r24, 0x01	; 1
+     b54:	90 e0       	ldi	r25, 0x00	; 0
+     b56:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
+     b5a:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+
+00000b5e <.L49>:
         if (knopx == 4 && (PINK & (1 << PK4))){xmotoruit(); xbereikt = 1;}
-     b56:	89 81       	ldd	r24, Y+1	; 0x01
-     b58:	9a 81       	ldd	r25, Y+2	; 0x02
-     b5a:	84 30       	cpi	r24, 0x04	; 4
-     b5c:	91 05       	cpc	r25, r1
-     b5e:	91 f4       	brne	.+36     	; 0xb84 <.L50>
-
-00000b60 <.Loc.343>:
-     b60:	86 e0       	ldi	r24, 0x06	; 6
-     b62:	91 e0       	ldi	r25, 0x01	; 1
-     b64:	fc 01       	movw	r30, r24
-     b66:	80 81       	ld	r24, Z
+     b5e:	89 81       	ldd	r24, Y+1	; 0x01
+     b60:	9a 81       	ldd	r25, Y+2	; 0x02
+     b62:	84 30       	cpi	r24, 0x04	; 4
+     b64:	91 05       	cpc	r25, r1
+     b66:	91 f4       	brne	.+36     	; 0xb8c <.L50>
 
 00000b68 <.Loc.344>:
-     b68:	88 2f       	mov	r24, r24
-     b6a:	90 e0       	ldi	r25, 0x00	; 0
-     b6c:	80 71       	andi	r24, 0x10	; 16
-     b6e:	99 27       	eor	r25, r25
+     b68:	86 e0       	ldi	r24, 0x06	; 6
+     b6a:	91 e0       	ldi	r25, 0x01	; 1
+     b6c:	fc 01       	movw	r30, r24
+     b6e:	80 81       	ld	r24, Z
 
 00000b70 <.Loc.345>:
-     b70:	00 97       	sbiw	r24, 0x00	; 0
-     b72:	41 f0       	breq	.+16     	; 0xb84 <.L50>
+     b70:	88 2f       	mov	r24, r24
+     b72:	90 e0       	ldi	r25, 0x00	; 0
+     b74:	80 71       	andi	r24, 0x10	; 16
+     b76:	99 27       	eor	r25, r25
 
-00000b74 <.Loc.346>:
-     b74:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
+00000b78 <.Loc.346>:
+     b78:	00 97       	sbiw	r24, 0x00	; 0
+     b7a:	41 f0       	breq	.+16     	; 0xb8c <.L50>
 
-00000b78 <.Loc.347>:
-     b78:	81 e0       	ldi	r24, 0x01	; 1
-     b7a:	90 e0       	ldi	r25, 0x00	; 0
-     b7c:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
-     b80:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+00000b7c <.Loc.347>:
+     b7c:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
 
-00000b84 <.L50>:
+00000b80 <.Loc.348>:
+     b80:	81 e0       	ldi	r24, 0x01	; 1
+     b82:	90 e0       	ldi	r25, 0x00	; 0
+     b84:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
+     b88:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+
+00000b8c <.L50>:
         if (knopx == 5 && (PINK & (1 << PK5))){xmotoruit(); xbereikt = 1;}
-     b84:	89 81       	ldd	r24, Y+1	; 0x01
-     b86:	9a 81       	ldd	r25, Y+2	; 0x02
-     b88:	85 30       	cpi	r24, 0x05	; 5
-     b8a:	91 05       	cpc	r25, r1
-     b8c:	91 f4       	brne	.+36     	; 0xbb2 <.L46>
-
-00000b8e <.Loc.349>:
-     b8e:	86 e0       	ldi	r24, 0x06	; 6
-     b90:	91 e0       	ldi	r25, 0x01	; 1
-     b92:	fc 01       	movw	r30, r24
-     b94:	80 81       	ld	r24, Z
+     b8c:	89 81       	ldd	r24, Y+1	; 0x01
+     b8e:	9a 81       	ldd	r25, Y+2	; 0x02
+     b90:	85 30       	cpi	r24, 0x05	; 5
+     b92:	91 05       	cpc	r25, r1
+     b94:	91 f4       	brne	.+36     	; 0xbba <.L46>
 
 00000b96 <.Loc.350>:
-     b96:	88 2f       	mov	r24, r24
-     b98:	90 e0       	ldi	r25, 0x00	; 0
-     b9a:	80 72       	andi	r24, 0x20	; 32
-     b9c:	99 27       	eor	r25, r25
+     b96:	86 e0       	ldi	r24, 0x06	; 6
+     b98:	91 e0       	ldi	r25, 0x01	; 1
+     b9a:	fc 01       	movw	r30, r24
+     b9c:	80 81       	ld	r24, Z
 
 00000b9e <.Loc.351>:
-     b9e:	00 97       	sbiw	r24, 0x00	; 0
-     ba0:	41 f0       	breq	.+16     	; 0xbb2 <.L46>
+     b9e:	88 2f       	mov	r24, r24
+     ba0:	90 e0       	ldi	r25, 0x00	; 0
+     ba2:	80 72       	andi	r24, 0x20	; 32
+     ba4:	99 27       	eor	r25, r25
 
-00000ba2 <.Loc.352>:
-     ba2:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
+00000ba6 <.Loc.352>:
+     ba6:	00 97       	sbiw	r24, 0x00	; 0
+     ba8:	41 f0       	breq	.+16     	; 0xbba <.L46>
 
-00000ba6 <.Loc.353>:
-     ba6:	81 e0       	ldi	r24, 0x01	; 1
-     ba8:	90 e0       	ldi	r25, 0x00	; 0
-     baa:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
-     bae:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+00000baa <.Loc.353>:
+     baa:	0e 94 b1 01 	call	0x362	; 0x362 <xmotoruit>
 
-00000bb2 <.L46>:
+00000bae <.Loc.354>:
+     bae:	81 e0       	ldi	r24, 0x01	; 1
+     bb0:	90 e0       	ldi	r25, 0x00	; 0
+     bb2:	90 93 80 02 	sts	0x0280, r25	; 0x800280 <xbereikt+0x1>
+     bb6:	80 93 7f 02 	sts	0x027F, r24	; 0x80027f <xbereikt>
+
+00000bba <.L46>:
         while(xbereikt == 0)
-     bb2:	80 91 7f 02 	lds	r24, 0x027F	; 0x80027f <xbereikt>
-     bb6:	90 91 80 02 	lds	r25, 0x0280	; 0x800280 <xbereikt+0x1>
-     bba:	00 97       	sbiw	r24, 0x00	; 0
-     bbc:	09 f4       	brne	.+2      	; 0xbc0 <.Loc.355>
+     bba:	80 91 7f 02 	lds	r24, 0x027F	; 0x80027f <xbereikt>
+     bbe:	90 91 80 02 	lds	r25, 0x0280	; 0x800280 <xbereikt+0x1>
+     bc2:	00 97       	sbiw	r24, 0x00	; 0
+     bc4:	09 f4       	brne	.+2      	; 0xbc8 <.Loc.356>
 
-00000bbe <L0^A>:
-     bbe:	84 cf       	rjmp	.-248    	; 0xac8 <.L52>
+00000bc6 <L0^A>:
+     bc6:	84 cf       	rjmp	.-248    	; 0xad0 <.L52>
 
-00000bc0 <.Loc.355>:
+00000bc8 <.Loc.356>:
         }
         vorigestaatknopx = knopx;
-     bc0:	89 81       	ldd	r24, Y+1	; 0x01
-     bc2:	9a 81       	ldd	r25, Y+2	; 0x02
-     bc4:	90 93 84 02 	sts	0x0284, r25	; 0x800284 <vorigestaatknopx.1+0x1>
-     bc8:	80 93 83 02 	sts	0x0283, r24	; 0x800283 <vorigestaatknopx.1>
+     bc8:	89 81       	ldd	r24, Y+1	; 0x01
+     bca:	9a 81       	ldd	r25, Y+2	; 0x02
+     bcc:	90 93 84 02 	sts	0x0284, r25	; 0x800284 <vorigestaatknopx.1+0x1>
+     bd0:	80 93 83 02 	sts	0x0283, r24	; 0x800283 <vorigestaatknopx.1>
 
-00000bcc <.L53>:
+00000bd4 <.L53>:
     }
 }
-     bcc:	00 00       	nop
-     bce:	e6 96       	adiw	r28, 0x36	; 54
-     bd0:	0f b6       	in	r0, 0x3f	; 63
-     bd2:	f8 94       	cli
-     bd4:	de bf       	out	0x3e, r29	; 62
-     bd6:	0f be       	out	0x3f, r0	; 63
-     bd8:	cd bf       	out	0x3d, r28	; 61
-     bda:	df 91       	pop	r29
-     bdc:	cf 91       	pop	r28
-     bde:	08 95       	ret
+     bd4:	00 00       	nop
+     bd6:	e6 96       	adiw	r28, 0x36	; 54
+     bd8:	0f b6       	in	r0, 0x3f	; 63
+     bda:	f8 94       	cli
+     bdc:	de bf       	out	0x3e, r29	; 62
+     bde:	0f be       	out	0x3f, r0	; 63
+     be0:	cd bf       	out	0x3d, r28	; 61
+     be2:	df 91       	pop	r29
+     be4:	cf 91       	pop	r28
+     be6:	08 95       	ret
 
-00000be0 <bewegingy>:
+00000be8 <bewegingy>:
 
 
 
 void bewegingy(int LOCATIE) // brengt de y as naar de goede coordinaat
 {
-     be0:	cf 93       	push	r28
-     be2:	df 93       	push	r29
-     be4:	cd b7       	in	r28, 0x3d	; 61
-     be6:	de b7       	in	r29, 0x3e	; 62
-     be8:	e6 97       	sbiw	r28, 0x36	; 54
-     bea:	0f b6       	in	r0, 0x3f	; 63
-     bec:	f8 94       	cli
-     bee:	de bf       	out	0x3e, r29	; 62
-     bf0:	0f be       	out	0x3f, r0	; 63
-     bf2:	cd bf       	out	0x3d, r28	; 61
-     bf4:	9e ab       	std	Y+54, r25	; 0x36
-     bf6:	8d ab       	std	Y+53, r24	; 0x35
+     be8:	cf 93       	push	r28
+     bea:	df 93       	push	r29
+     bec:	cd b7       	in	r28, 0x3d	; 61
+     bee:	de b7       	in	r29, 0x3e	; 62
+     bf0:	e6 97       	sbiw	r28, 0x36	; 54
+     bf2:	0f b6       	in	r0, 0x3f	; 63
+     bf4:	f8 94       	cli
+     bf6:	de bf       	out	0x3e, r29	; 62
+     bf8:	0f be       	out	0x3f, r0	; 63
+     bfa:	cd bf       	out	0x3d, r28	; 61
+     bfc:	9e ab       	std	Y+54, r25	; 0x36
+     bfe:	8d ab       	std	Y+53, r24	; 0x35
 
-00000bf8 <.Loc.358>:
+00000c00 <.Loc.359>:
     int arrayknopy[25] = {
-     bf8:	82 e3       	ldi	r24, 0x32	; 50
-     bfa:	e4 e4       	ldi	r30, 0x44	; 68
-     bfc:	f2 e0       	ldi	r31, 0x02	; 2
-     bfe:	de 01       	movw	r26, r28
-     c00:	13 96       	adiw	r26, 0x03	; 3
+     c00:	82 e3       	ldi	r24, 0x32	; 50
+     c02:	e4 e4       	ldi	r30, 0x44	; 68
+     c04:	f2 e0       	ldi	r31, 0x02	; 2
+     c06:	de 01       	movw	r26, r28
+     c08:	13 96       	adiw	r26, 0x03	; 3
 
-00000c02 <.L^B2>:
-     c02:	01 90       	ld	r0, Z+
-     c04:	0d 92       	st	X+, r0
-     c06:	8a 95       	dec	r24
-     c08:	e1 f7       	brne	.-8      	; 0xc02 <.L^B2>
+00000c0a <.L^B2>:
+     c0a:	01 90       	ld	r0, Z+
+     c0c:	0d 92       	st	X+, r0
+     c0e:	8a 95       	dec	r24
+     c10:	e1 f7       	brne	.-8      	; 0xc0a <.L^B2>
 
-00000c0a <.Loc.359>:
+00000c12 <.Loc.360>:
         1,2,3,4,5,
         1,2,3,4,5,
         1,2,3,4,5
     };
 
     int knopy = arrayknopy[LOCATIE - 1];
-     c0a:	8d a9       	ldd	r24, Y+53	; 0x35
-     c0c:	9e a9       	ldd	r25, Y+54	; 0x36
-     c0e:	01 97       	sbiw	r24, 0x01	; 1
+     c12:	8d a9       	ldd	r24, Y+53	; 0x35
+     c14:	9e a9       	ldd	r25, Y+54	; 0x36
+     c16:	01 97       	sbiw	r24, 0x01	; 1
 
-00000c10 <.Loc.360>:
-     c10:	88 0f       	add	r24, r24
-     c12:	99 1f       	adc	r25, r25
-     c14:	9e 01       	movw	r18, r28
-     c16:	2f 5f       	subi	r18, 0xFF	; 255
-     c18:	3f 4f       	sbci	r19, 0xFF	; 255
-     c1a:	82 0f       	add	r24, r18
-     c1c:	93 1f       	adc	r25, r19
-     c1e:	02 96       	adiw	r24, 0x02	; 2
-     c20:	fc 01       	movw	r30, r24
-     c22:	80 81       	ld	r24, Z
-     c24:	91 81       	ldd	r25, Z+1	; 0x01
-     c26:	9a 83       	std	Y+2, r25	; 0x02
-     c28:	89 83       	std	Y+1, r24	; 0x01
+00000c18 <.Loc.361>:
+     c18:	88 0f       	add	r24, r24
+     c1a:	99 1f       	adc	r25, r25
+     c1c:	9e 01       	movw	r18, r28
+     c1e:	2f 5f       	subi	r18, 0xFF	; 255
+     c20:	3f 4f       	sbci	r19, 0xFF	; 255
+     c22:	82 0f       	add	r24, r18
+     c24:	93 1f       	adc	r25, r19
+     c26:	02 96       	adiw	r24, 0x02	; 2
+     c28:	fc 01       	movw	r30, r24
+     c2a:	80 81       	ld	r24, Z
+     c2c:	91 81       	ldd	r25, Z+1	; 0x01
+     c2e:	9a 83       	std	Y+2, r25	; 0x02
+     c30:	89 83       	std	Y+1, r24	; 0x01
 
-00000c2a <.Loc.361>:
+00000c32 <.Loc.362>:
     static int vorigestaatknopy = 0;
 
     // MOTOR POSITIEF
     if (knopy > vorigestaatknopy)
-     c2a:	80 91 85 02 	lds	r24, 0x0285	; 0x800285 <vorigestaatknopy.0>
-     c2e:	90 91 86 02 	lds	r25, 0x0286	; 0x800286 <vorigestaatknopy.0+0x1>
+     c32:	80 91 85 02 	lds	r24, 0x0285	; 0x800285 <vorigestaatknopy.0>
+     c36:	90 91 86 02 	lds	r25, 0x0286	; 0x800286 <vorigestaatknopy.0+0x1>
 
-00000c32 <.Loc.362>:
-     c32:	29 81       	ldd	r18, Y+1	; 0x01
-     c34:	3a 81       	ldd	r19, Y+2	; 0x02
-     c36:	28 17       	cp	r18, r24
-     c38:	39 07       	cpc	r19, r25
-     c3a:	09 f0       	breq	.+2      	; 0xc3e <L0^A>
+00000c3a <.Loc.363>:
+     c3a:	29 81       	ldd	r18, Y+1	; 0x01
+     c3c:	3a 81       	ldd	r19, Y+2	; 0x02
+     c3e:	28 17       	cp	r18, r24
+     c40:	39 07       	cpc	r19, r25
+     c42:	09 f0       	breq	.+2      	; 0xc46 <L0^A>
 
-00000c3c <L0^A>:
-     c3c:	0c f4       	brge	.+2      	; 0xc40 <.Loc.363>
+00000c44 <L0^A>:
+     c44:	0c f4       	brge	.+2      	; 0xc48 <.Loc.364>
 
-00000c3e <L0^A>:
-     c3e:	87 c0       	rjmp	.+270    	; 0xd4e <.L55>
-
-00000c40 <.Loc.363>:
-    {
-        ybereikt = 0;
-     c40:	10 92 82 02 	sts	0x0282, r1	; 0x800282 <ybereikt+0x1>
-     c44:	10 92 81 02 	sts	0x0281, r1	; 0x800281 <ybereikt>
+00000c46 <L0^A>:
+     c46:	87 c0       	rjmp	.+270    	; 0xd56 <.L55>
 
 00000c48 <.Loc.364>:
-        while(ybereikt == 0)
-     c48:	75 c0       	rjmp	.+234    	; 0xd34 <.L56>
+    {
+        ybereikt = 0;
+     c48:	10 92 82 02 	sts	0x0282, r1	; 0x800282 <ybereikt+0x1>
+     c4c:	10 92 81 02 	sts	0x0281, r1	; 0x800281 <ybereikt>
 
-00000c4a <.L62>:
+00000c50 <.Loc.365>:
+        while(ybereikt == 0)
+     c50:	75 c0       	rjmp	.+234    	; 0xd3c <.L56>
+
+00000c52 <.L62>:
         {
         ymotorpositief();
-     c4a:	0e 94 f7 01 	call	0x3ee	; 0x3ee <ymotorpositief>
+     c52:	0e 94 f7 01 	call	0x3ee	; 0x3ee <ymotorpositief>
 
-00000c4e <.Loc.366>:
+00000c56 <.Loc.367>:
 
         if (knopy == 1 && (PINL & (1 << PL0))){ymotoruit(); ybereikt = 1;}
-     c4e:	89 81       	ldd	r24, Y+1	; 0x01
-     c50:	9a 81       	ldd	r25, Y+2	; 0x02
-     c52:	81 30       	cpi	r24, 0x01	; 1
-     c54:	91 05       	cpc	r25, r1
-     c56:	91 f4       	brne	.+36     	; 0xc7c <.L57>
-
-00000c58 <.Loc.367>:
-     c58:	89 e0       	ldi	r24, 0x09	; 9
-     c5a:	91 e0       	ldi	r25, 0x01	; 1
-     c5c:	fc 01       	movw	r30, r24
-     c5e:	80 81       	ld	r24, Z
+     c56:	89 81       	ldd	r24, Y+1	; 0x01
+     c58:	9a 81       	ldd	r25, Y+2	; 0x02
+     c5a:	81 30       	cpi	r24, 0x01	; 1
+     c5c:	91 05       	cpc	r25, r1
+     c5e:	91 f4       	brne	.+36     	; 0xc84 <.L57>
 
 00000c60 <.Loc.368>:
-     c60:	88 2f       	mov	r24, r24
-     c62:	90 e0       	ldi	r25, 0x00	; 0
-     c64:	81 70       	andi	r24, 0x01	; 1
-     c66:	99 27       	eor	r25, r25
+     c60:	89 e0       	ldi	r24, 0x09	; 9
+     c62:	91 e0       	ldi	r25, 0x01	; 1
+     c64:	fc 01       	movw	r30, r24
+     c66:	80 81       	ld	r24, Z
 
 00000c68 <.Loc.369>:
-     c68:	00 97       	sbiw	r24, 0x00	; 0
-     c6a:	41 f0       	breq	.+16     	; 0xc7c <.L57>
+     c68:	88 2f       	mov	r24, r24
+     c6a:	90 e0       	ldi	r25, 0x00	; 0
+     c6c:	81 70       	andi	r24, 0x01	; 1
+     c6e:	99 27       	eor	r25, r25
 
-00000c6c <.Loc.370>:
-     c6c:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
+00000c70 <.Loc.370>:
+     c70:	00 97       	sbiw	r24, 0x00	; 0
+     c72:	41 f0       	breq	.+16     	; 0xc84 <.L57>
 
-00000c70 <.Loc.371>:
-     c70:	81 e0       	ldi	r24, 0x01	; 1
-     c72:	90 e0       	ldi	r25, 0x00	; 0
-     c74:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
-     c78:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+00000c74 <.Loc.371>:
+     c74:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
 
-00000c7c <.L57>:
+00000c78 <.Loc.372>:
+     c78:	81 e0       	ldi	r24, 0x01	; 1
+     c7a:	90 e0       	ldi	r25, 0x00	; 0
+     c7c:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
+     c80:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+
+00000c84 <.L57>:
         if (knopy == 2 && (PINB & (1 << PB3))){ymotoruit(); ybereikt = 1;}
-     c7c:	89 81       	ldd	r24, Y+1	; 0x01
-     c7e:	9a 81       	ldd	r25, Y+2	; 0x02
-     c80:	82 30       	cpi	r24, 0x02	; 2
-     c82:	91 05       	cpc	r25, r1
-     c84:	91 f4       	brne	.+36     	; 0xcaa <.L58>
-
-00000c86 <.Loc.373>:
-     c86:	83 e2       	ldi	r24, 0x23	; 35
-     c88:	90 e0       	ldi	r25, 0x00	; 0
-     c8a:	fc 01       	movw	r30, r24
-     c8c:	80 81       	ld	r24, Z
+     c84:	89 81       	ldd	r24, Y+1	; 0x01
+     c86:	9a 81       	ldd	r25, Y+2	; 0x02
+     c88:	82 30       	cpi	r24, 0x02	; 2
+     c8a:	91 05       	cpc	r25, r1
+     c8c:	91 f4       	brne	.+36     	; 0xcb2 <.L58>
 
 00000c8e <.Loc.374>:
-     c8e:	88 2f       	mov	r24, r24
+     c8e:	83 e2       	ldi	r24, 0x23	; 35
      c90:	90 e0       	ldi	r25, 0x00	; 0
-     c92:	88 70       	andi	r24, 0x08	; 8
-     c94:	99 27       	eor	r25, r25
+     c92:	fc 01       	movw	r30, r24
+     c94:	80 81       	ld	r24, Z
 
 00000c96 <.Loc.375>:
-     c96:	00 97       	sbiw	r24, 0x00	; 0
-     c98:	41 f0       	breq	.+16     	; 0xcaa <.L58>
+     c96:	88 2f       	mov	r24, r24
+     c98:	90 e0       	ldi	r25, 0x00	; 0
+     c9a:	88 70       	andi	r24, 0x08	; 8
+     c9c:	99 27       	eor	r25, r25
 
-00000c9a <.Loc.376>:
-     c9a:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
+00000c9e <.Loc.376>:
+     c9e:	00 97       	sbiw	r24, 0x00	; 0
+     ca0:	41 f0       	breq	.+16     	; 0xcb2 <.L58>
 
-00000c9e <.Loc.377>:
-     c9e:	81 e0       	ldi	r24, 0x01	; 1
-     ca0:	90 e0       	ldi	r25, 0x00	; 0
-     ca2:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
-     ca6:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+00000ca2 <.Loc.377>:
+     ca2:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
 
-00000caa <.L58>:
+00000ca6 <.Loc.378>:
+     ca6:	81 e0       	ldi	r24, 0x01	; 1
+     ca8:	90 e0       	ldi	r25, 0x00	; 0
+     caa:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
+     cae:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+
+00000cb2 <.L58>:
         if (knopy == 3 && (PINB & (1 << PB2))){ymotoruit(); ybereikt = 1;}
-     caa:	89 81       	ldd	r24, Y+1	; 0x01
-     cac:	9a 81       	ldd	r25, Y+2	; 0x02
-     cae:	83 30       	cpi	r24, 0x03	; 3
-     cb0:	91 05       	cpc	r25, r1
-     cb2:	91 f4       	brne	.+36     	; 0xcd8 <.L59>
-
-00000cb4 <.Loc.379>:
-     cb4:	83 e2       	ldi	r24, 0x23	; 35
-     cb6:	90 e0       	ldi	r25, 0x00	; 0
-     cb8:	fc 01       	movw	r30, r24
-     cba:	80 81       	ld	r24, Z
+     cb2:	89 81       	ldd	r24, Y+1	; 0x01
+     cb4:	9a 81       	ldd	r25, Y+2	; 0x02
+     cb6:	83 30       	cpi	r24, 0x03	; 3
+     cb8:	91 05       	cpc	r25, r1
+     cba:	91 f4       	brne	.+36     	; 0xce0 <.L59>
 
 00000cbc <.Loc.380>:
-     cbc:	88 2f       	mov	r24, r24
+     cbc:	83 e2       	ldi	r24, 0x23	; 35
      cbe:	90 e0       	ldi	r25, 0x00	; 0
-     cc0:	84 70       	andi	r24, 0x04	; 4
-     cc2:	99 27       	eor	r25, r25
+     cc0:	fc 01       	movw	r30, r24
+     cc2:	80 81       	ld	r24, Z
 
 00000cc4 <.Loc.381>:
-     cc4:	00 97       	sbiw	r24, 0x00	; 0
-     cc6:	41 f0       	breq	.+16     	; 0xcd8 <.L59>
+     cc4:	88 2f       	mov	r24, r24
+     cc6:	90 e0       	ldi	r25, 0x00	; 0
+     cc8:	84 70       	andi	r24, 0x04	; 4
+     cca:	99 27       	eor	r25, r25
 
-00000cc8 <.Loc.382>:
-     cc8:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
+00000ccc <.Loc.382>:
+     ccc:	00 97       	sbiw	r24, 0x00	; 0
+     cce:	41 f0       	breq	.+16     	; 0xce0 <.L59>
 
-00000ccc <.Loc.383>:
-     ccc:	81 e0       	ldi	r24, 0x01	; 1
-     cce:	90 e0       	ldi	r25, 0x00	; 0
-     cd0:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
-     cd4:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+00000cd0 <.Loc.383>:
+     cd0:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
 
-00000cd8 <.L59>:
+00000cd4 <.Loc.384>:
+     cd4:	81 e0       	ldi	r24, 0x01	; 1
+     cd6:	90 e0       	ldi	r25, 0x00	; 0
+     cd8:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
+     cdc:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+
+00000ce0 <.L59>:
         if (knopy == 4 && (PINB & (1 << PB1))){ymotoruit(); ybereikt = 1;}
-     cd8:	89 81       	ldd	r24, Y+1	; 0x01
-     cda:	9a 81       	ldd	r25, Y+2	; 0x02
-     cdc:	84 30       	cpi	r24, 0x04	; 4
-     cde:	91 05       	cpc	r25, r1
-     ce0:	91 f4       	brne	.+36     	; 0xd06 <.L60>
-
-00000ce2 <.Loc.385>:
-     ce2:	83 e2       	ldi	r24, 0x23	; 35
-     ce4:	90 e0       	ldi	r25, 0x00	; 0
-     ce6:	fc 01       	movw	r30, r24
-     ce8:	80 81       	ld	r24, Z
+     ce0:	89 81       	ldd	r24, Y+1	; 0x01
+     ce2:	9a 81       	ldd	r25, Y+2	; 0x02
+     ce4:	84 30       	cpi	r24, 0x04	; 4
+     ce6:	91 05       	cpc	r25, r1
+     ce8:	91 f4       	brne	.+36     	; 0xd0e <.L60>
 
 00000cea <.Loc.386>:
-     cea:	88 2f       	mov	r24, r24
+     cea:	83 e2       	ldi	r24, 0x23	; 35
      cec:	90 e0       	ldi	r25, 0x00	; 0
-     cee:	82 70       	andi	r24, 0x02	; 2
-     cf0:	99 27       	eor	r25, r25
+     cee:	fc 01       	movw	r30, r24
+     cf0:	80 81       	ld	r24, Z
 
 00000cf2 <.Loc.387>:
-     cf2:	00 97       	sbiw	r24, 0x00	; 0
-     cf4:	41 f0       	breq	.+16     	; 0xd06 <.L60>
+     cf2:	88 2f       	mov	r24, r24
+     cf4:	90 e0       	ldi	r25, 0x00	; 0
+     cf6:	82 70       	andi	r24, 0x02	; 2
+     cf8:	99 27       	eor	r25, r25
 
-00000cf6 <.Loc.388>:
-     cf6:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
+00000cfa <.Loc.388>:
+     cfa:	00 97       	sbiw	r24, 0x00	; 0
+     cfc:	41 f0       	breq	.+16     	; 0xd0e <.L60>
 
-00000cfa <.Loc.389>:
-     cfa:	81 e0       	ldi	r24, 0x01	; 1
-     cfc:	90 e0       	ldi	r25, 0x00	; 0
-     cfe:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
-     d02:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+00000cfe <.Loc.389>:
+     cfe:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
 
-00000d06 <.L60>:
+00000d02 <.Loc.390>:
+     d02:	81 e0       	ldi	r24, 0x01	; 1
+     d04:	90 e0       	ldi	r25, 0x00	; 0
+     d06:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
+     d0a:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+
+00000d0e <.L60>:
         if (knopy == 5 && (PINB & (1 << PB0))){ymotoruit(); ybereikt = 1;}
-     d06:	89 81       	ldd	r24, Y+1	; 0x01
-     d08:	9a 81       	ldd	r25, Y+2	; 0x02
-     d0a:	85 30       	cpi	r24, 0x05	; 5
-     d0c:	91 05       	cpc	r25, r1
-     d0e:	91 f4       	brne	.+36     	; 0xd34 <.L56>
-
-00000d10 <.Loc.391>:
-     d10:	83 e2       	ldi	r24, 0x23	; 35
-     d12:	90 e0       	ldi	r25, 0x00	; 0
-     d14:	fc 01       	movw	r30, r24
-     d16:	80 81       	ld	r24, Z
+     d0e:	89 81       	ldd	r24, Y+1	; 0x01
+     d10:	9a 81       	ldd	r25, Y+2	; 0x02
+     d12:	85 30       	cpi	r24, 0x05	; 5
+     d14:	91 05       	cpc	r25, r1
+     d16:	91 f4       	brne	.+36     	; 0xd3c <.L56>
 
 00000d18 <.Loc.392>:
-     d18:	88 2f       	mov	r24, r24
+     d18:	83 e2       	ldi	r24, 0x23	; 35
      d1a:	90 e0       	ldi	r25, 0x00	; 0
-     d1c:	81 70       	andi	r24, 0x01	; 1
-     d1e:	99 27       	eor	r25, r25
+     d1c:	fc 01       	movw	r30, r24
+     d1e:	80 81       	ld	r24, Z
 
 00000d20 <.Loc.393>:
-     d20:	00 97       	sbiw	r24, 0x00	; 0
-     d22:	41 f0       	breq	.+16     	; 0xd34 <.L56>
+     d20:	88 2f       	mov	r24, r24
+     d22:	90 e0       	ldi	r25, 0x00	; 0
+     d24:	81 70       	andi	r24, 0x01	; 1
+     d26:	99 27       	eor	r25, r25
 
-00000d24 <.Loc.394>:
-     d24:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
+00000d28 <.Loc.394>:
+     d28:	00 97       	sbiw	r24, 0x00	; 0
+     d2a:	41 f0       	breq	.+16     	; 0xd3c <.L56>
 
-00000d28 <.Loc.395>:
-     d28:	81 e0       	ldi	r24, 0x01	; 1
-     d2a:	90 e0       	ldi	r25, 0x00	; 0
-     d2c:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
-     d30:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+00000d2c <.Loc.395>:
+     d2c:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
 
-00000d34 <.L56>:
+00000d30 <.Loc.396>:
+     d30:	81 e0       	ldi	r24, 0x01	; 1
+     d32:	90 e0       	ldi	r25, 0x00	; 0
+     d34:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
+     d38:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+
+00000d3c <.L56>:
         while(ybereikt == 0)
-     d34:	80 91 81 02 	lds	r24, 0x0281	; 0x800281 <ybereikt>
-     d38:	90 91 82 02 	lds	r25, 0x0282	; 0x800282 <ybereikt+0x1>
-     d3c:	00 97       	sbiw	r24, 0x00	; 0
-     d3e:	09 f4       	brne	.+2      	; 0xd42 <.Loc.397>
+     d3c:	80 91 81 02 	lds	r24, 0x0281	; 0x800281 <ybereikt>
+     d40:	90 91 82 02 	lds	r25, 0x0282	; 0x800282 <ybereikt+0x1>
+     d44:	00 97       	sbiw	r24, 0x00	; 0
+     d46:	09 f4       	brne	.+2      	; 0xd4a <.Loc.398>
 
-00000d40 <L0^A>:
-     d40:	84 cf       	rjmp	.-248    	; 0xc4a <.L62>
+00000d48 <L0^A>:
+     d48:	84 cf       	rjmp	.-248    	; 0xc52 <.L62>
 
-00000d42 <.Loc.397>:
+00000d4a <.Loc.398>:
         }
 
         vorigestaatknopy = knopy;
-     d42:	89 81       	ldd	r24, Y+1	; 0x01
-     d44:	9a 81       	ldd	r25, Y+2	; 0x02
-     d46:	90 93 86 02 	sts	0x0286, r25	; 0x800286 <vorigestaatknopy.0+0x1>
-     d4a:	80 93 85 02 	sts	0x0285, r24	; 0x800285 <vorigestaatknopy.0>
+     d4a:	89 81       	ldd	r24, Y+1	; 0x01
+     d4c:	9a 81       	ldd	r25, Y+2	; 0x02
+     d4e:	90 93 86 02 	sts	0x0286, r25	; 0x800286 <vorigestaatknopy.0+0x1>
+     d52:	80 93 85 02 	sts	0x0285, r24	; 0x800285 <vorigestaatknopy.0>
 
-00000d4e <.L55>:
+00000d56 <.L55>:
     }
 
     // MOTOR NEGATIEF
     if (knopy < vorigestaatknopy)
-     d4e:	80 91 85 02 	lds	r24, 0x0285	; 0x800285 <vorigestaatknopy.0>
-     d52:	90 91 86 02 	lds	r25, 0x0286	; 0x800286 <vorigestaatknopy.0+0x1>
+     d56:	80 91 85 02 	lds	r24, 0x0285	; 0x800285 <vorigestaatknopy.0>
+     d5a:	90 91 86 02 	lds	r25, 0x0286	; 0x800286 <vorigestaatknopy.0+0x1>
 
-00000d56 <.Loc.399>:
-     d56:	29 81       	ldd	r18, Y+1	; 0x01
-     d58:	3a 81       	ldd	r19, Y+2	; 0x02
-     d5a:	28 17       	cp	r18, r24
-     d5c:	39 07       	cpc	r19, r25
-     d5e:	0c f0       	brlt	.+2      	; 0xd62 <.Loc.400>
+00000d5e <.Loc.400>:
+     d5e:	29 81       	ldd	r18, Y+1	; 0x01
+     d60:	3a 81       	ldd	r19, Y+2	; 0x02
+     d62:	28 17       	cp	r18, r24
+     d64:	39 07       	cpc	r19, r25
+     d66:	0c f0       	brlt	.+2      	; 0xd6a <.Loc.401>
 
-00000d60 <L0^A>:
-     d60:	87 c0       	rjmp	.+270    	; 0xe70 <.L71>
-
-00000d62 <.Loc.400>:
-    {
-        ybereikt = 0;
-     d62:	10 92 82 02 	sts	0x0282, r1	; 0x800282 <ybereikt+0x1>
-     d66:	10 92 81 02 	sts	0x0281, r1	; 0x800281 <ybereikt>
+00000d68 <L0^A>:
+     d68:	87 c0       	rjmp	.+270    	; 0xe78 <.L71>
 
 00000d6a <.Loc.401>:
-        while(ybereikt == 0)
-     d6a:	75 c0       	rjmp	.+234    	; 0xe56 <.L64>
+    {
+        ybereikt = 0;
+     d6a:	10 92 82 02 	sts	0x0282, r1	; 0x800282 <ybereikt+0x1>
+     d6e:	10 92 81 02 	sts	0x0281, r1	; 0x800281 <ybereikt>
 
-00000d6c <.L70>:
+00000d72 <.Loc.402>:
+        while(ybereikt == 0)
+     d72:	75 c0       	rjmp	.+234    	; 0xe5e <.L64>
+
+00000d74 <.L70>:
         {
         ymotornegatief();
-     d6c:	0e 94 46 02 	call	0x48c	; 0x48c <ymotornegatief>
+     d74:	0e 94 46 02 	call	0x48c	; 0x48c <ymotornegatief>
 
-00000d70 <.Loc.403>:
+00000d78 <.Loc.404>:
         if (knopy == 1 && (PINL & (1 << PL0))){ymotoruit(); ybereikt = 1;}
-     d70:	89 81       	ldd	r24, Y+1	; 0x01
-     d72:	9a 81       	ldd	r25, Y+2	; 0x02
-     d74:	81 30       	cpi	r24, 0x01	; 1
-     d76:	91 05       	cpc	r25, r1
-     d78:	91 f4       	brne	.+36     	; 0xd9e <.L65>
-
-00000d7a <.Loc.404>:
-     d7a:	89 e0       	ldi	r24, 0x09	; 9
-     d7c:	91 e0       	ldi	r25, 0x01	; 1
-     d7e:	fc 01       	movw	r30, r24
-     d80:	80 81       	ld	r24, Z
+     d78:	89 81       	ldd	r24, Y+1	; 0x01
+     d7a:	9a 81       	ldd	r25, Y+2	; 0x02
+     d7c:	81 30       	cpi	r24, 0x01	; 1
+     d7e:	91 05       	cpc	r25, r1
+     d80:	91 f4       	brne	.+36     	; 0xda6 <.L65>
 
 00000d82 <.Loc.405>:
-     d82:	88 2f       	mov	r24, r24
-     d84:	90 e0       	ldi	r25, 0x00	; 0
-     d86:	81 70       	andi	r24, 0x01	; 1
-     d88:	99 27       	eor	r25, r25
+     d82:	89 e0       	ldi	r24, 0x09	; 9
+     d84:	91 e0       	ldi	r25, 0x01	; 1
+     d86:	fc 01       	movw	r30, r24
+     d88:	80 81       	ld	r24, Z
 
 00000d8a <.Loc.406>:
-     d8a:	00 97       	sbiw	r24, 0x00	; 0
-     d8c:	41 f0       	breq	.+16     	; 0xd9e <.L65>
+     d8a:	88 2f       	mov	r24, r24
+     d8c:	90 e0       	ldi	r25, 0x00	; 0
+     d8e:	81 70       	andi	r24, 0x01	; 1
+     d90:	99 27       	eor	r25, r25
 
-00000d8e <.Loc.407>:
-     d8e:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
+00000d92 <.Loc.407>:
+     d92:	00 97       	sbiw	r24, 0x00	; 0
+     d94:	41 f0       	breq	.+16     	; 0xda6 <.L65>
 
-00000d92 <.Loc.408>:
-     d92:	81 e0       	ldi	r24, 0x01	; 1
-     d94:	90 e0       	ldi	r25, 0x00	; 0
-     d96:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
-     d9a:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+00000d96 <.Loc.408>:
+     d96:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
 
-00000d9e <.L65>:
+00000d9a <.Loc.409>:
+     d9a:	81 e0       	ldi	r24, 0x01	; 1
+     d9c:	90 e0       	ldi	r25, 0x00	; 0
+     d9e:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
+     da2:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+
+00000da6 <.L65>:
         if (knopy == 2 && (PINB & (1 << PB3))){ymotoruit(); ybereikt = 1;}
-     d9e:	89 81       	ldd	r24, Y+1	; 0x01
-     da0:	9a 81       	ldd	r25, Y+2	; 0x02
-     da2:	82 30       	cpi	r24, 0x02	; 2
-     da4:	91 05       	cpc	r25, r1
-     da6:	91 f4       	brne	.+36     	; 0xdcc <.L66>
-
-00000da8 <.Loc.410>:
-     da8:	83 e2       	ldi	r24, 0x23	; 35
-     daa:	90 e0       	ldi	r25, 0x00	; 0
-     dac:	fc 01       	movw	r30, r24
-     dae:	80 81       	ld	r24, Z
+     da6:	89 81       	ldd	r24, Y+1	; 0x01
+     da8:	9a 81       	ldd	r25, Y+2	; 0x02
+     daa:	82 30       	cpi	r24, 0x02	; 2
+     dac:	91 05       	cpc	r25, r1
+     dae:	91 f4       	brne	.+36     	; 0xdd4 <.L66>
 
 00000db0 <.Loc.411>:
-     db0:	88 2f       	mov	r24, r24
+     db0:	83 e2       	ldi	r24, 0x23	; 35
      db2:	90 e0       	ldi	r25, 0x00	; 0
-     db4:	88 70       	andi	r24, 0x08	; 8
-     db6:	99 27       	eor	r25, r25
+     db4:	fc 01       	movw	r30, r24
+     db6:	80 81       	ld	r24, Z
 
 00000db8 <.Loc.412>:
-     db8:	00 97       	sbiw	r24, 0x00	; 0
-     dba:	41 f0       	breq	.+16     	; 0xdcc <.L66>
+     db8:	88 2f       	mov	r24, r24
+     dba:	90 e0       	ldi	r25, 0x00	; 0
+     dbc:	88 70       	andi	r24, 0x08	; 8
+     dbe:	99 27       	eor	r25, r25
 
-00000dbc <.Loc.413>:
-     dbc:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
+00000dc0 <.Loc.413>:
+     dc0:	00 97       	sbiw	r24, 0x00	; 0
+     dc2:	41 f0       	breq	.+16     	; 0xdd4 <.L66>
 
-00000dc0 <.Loc.414>:
-     dc0:	81 e0       	ldi	r24, 0x01	; 1
-     dc2:	90 e0       	ldi	r25, 0x00	; 0
-     dc4:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
-     dc8:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+00000dc4 <.Loc.414>:
+     dc4:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
 
-00000dcc <.L66>:
+00000dc8 <.Loc.415>:
+     dc8:	81 e0       	ldi	r24, 0x01	; 1
+     dca:	90 e0       	ldi	r25, 0x00	; 0
+     dcc:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
+     dd0:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+
+00000dd4 <.L66>:
         if (knopy == 3 && (PINB & (1 << PB2))){ymotoruit(); ybereikt = 1;}
-     dcc:	89 81       	ldd	r24, Y+1	; 0x01
-     dce:	9a 81       	ldd	r25, Y+2	; 0x02
-     dd0:	83 30       	cpi	r24, 0x03	; 3
-     dd2:	91 05       	cpc	r25, r1
-     dd4:	91 f4       	brne	.+36     	; 0xdfa <.L67>
-
-00000dd6 <.Loc.416>:
-     dd6:	83 e2       	ldi	r24, 0x23	; 35
-     dd8:	90 e0       	ldi	r25, 0x00	; 0
-     dda:	fc 01       	movw	r30, r24
-     ddc:	80 81       	ld	r24, Z
+     dd4:	89 81       	ldd	r24, Y+1	; 0x01
+     dd6:	9a 81       	ldd	r25, Y+2	; 0x02
+     dd8:	83 30       	cpi	r24, 0x03	; 3
+     dda:	91 05       	cpc	r25, r1
+     ddc:	91 f4       	brne	.+36     	; 0xe02 <.L67>
 
 00000dde <.Loc.417>:
-     dde:	88 2f       	mov	r24, r24
+     dde:	83 e2       	ldi	r24, 0x23	; 35
      de0:	90 e0       	ldi	r25, 0x00	; 0
-     de2:	84 70       	andi	r24, 0x04	; 4
-     de4:	99 27       	eor	r25, r25
+     de2:	fc 01       	movw	r30, r24
+     de4:	80 81       	ld	r24, Z
 
 00000de6 <.Loc.418>:
-     de6:	00 97       	sbiw	r24, 0x00	; 0
-     de8:	41 f0       	breq	.+16     	; 0xdfa <.L67>
+     de6:	88 2f       	mov	r24, r24
+     de8:	90 e0       	ldi	r25, 0x00	; 0
+     dea:	84 70       	andi	r24, 0x04	; 4
+     dec:	99 27       	eor	r25, r25
 
-00000dea <.Loc.419>:
-     dea:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
+00000dee <.Loc.419>:
+     dee:	00 97       	sbiw	r24, 0x00	; 0
+     df0:	41 f0       	breq	.+16     	; 0xe02 <.L67>
 
-00000dee <.Loc.420>:
-     dee:	81 e0       	ldi	r24, 0x01	; 1
-     df0:	90 e0       	ldi	r25, 0x00	; 0
-     df2:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
-     df6:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+00000df2 <.Loc.420>:
+     df2:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
 
-00000dfa <.L67>:
+00000df6 <.Loc.421>:
+     df6:	81 e0       	ldi	r24, 0x01	; 1
+     df8:	90 e0       	ldi	r25, 0x00	; 0
+     dfa:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
+     dfe:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+
+00000e02 <.L67>:
         if (knopy == 4 && (PINB & (1 << PB1))){ymotoruit(); ybereikt = 1;}
-     dfa:	89 81       	ldd	r24, Y+1	; 0x01
-     dfc:	9a 81       	ldd	r25, Y+2	; 0x02
-     dfe:	84 30       	cpi	r24, 0x04	; 4
-     e00:	91 05       	cpc	r25, r1
-     e02:	91 f4       	brne	.+36     	; 0xe28 <.L68>
-
-00000e04 <.Loc.422>:
-     e04:	83 e2       	ldi	r24, 0x23	; 35
-     e06:	90 e0       	ldi	r25, 0x00	; 0
-     e08:	fc 01       	movw	r30, r24
-     e0a:	80 81       	ld	r24, Z
+     e02:	89 81       	ldd	r24, Y+1	; 0x01
+     e04:	9a 81       	ldd	r25, Y+2	; 0x02
+     e06:	84 30       	cpi	r24, 0x04	; 4
+     e08:	91 05       	cpc	r25, r1
+     e0a:	91 f4       	brne	.+36     	; 0xe30 <.L68>
 
 00000e0c <.Loc.423>:
-     e0c:	88 2f       	mov	r24, r24
+     e0c:	83 e2       	ldi	r24, 0x23	; 35
      e0e:	90 e0       	ldi	r25, 0x00	; 0
-     e10:	82 70       	andi	r24, 0x02	; 2
-     e12:	99 27       	eor	r25, r25
+     e10:	fc 01       	movw	r30, r24
+     e12:	80 81       	ld	r24, Z
 
 00000e14 <.Loc.424>:
-     e14:	00 97       	sbiw	r24, 0x00	; 0
-     e16:	41 f0       	breq	.+16     	; 0xe28 <.L68>
+     e14:	88 2f       	mov	r24, r24
+     e16:	90 e0       	ldi	r25, 0x00	; 0
+     e18:	82 70       	andi	r24, 0x02	; 2
+     e1a:	99 27       	eor	r25, r25
 
-00000e18 <.Loc.425>:
-     e18:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
+00000e1c <.Loc.425>:
+     e1c:	00 97       	sbiw	r24, 0x00	; 0
+     e1e:	41 f0       	breq	.+16     	; 0xe30 <.L68>
 
-00000e1c <.Loc.426>:
-     e1c:	81 e0       	ldi	r24, 0x01	; 1
-     e1e:	90 e0       	ldi	r25, 0x00	; 0
-     e20:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
-     e24:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+00000e20 <.Loc.426>:
+     e20:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
 
-00000e28 <.L68>:
+00000e24 <.Loc.427>:
+     e24:	81 e0       	ldi	r24, 0x01	; 1
+     e26:	90 e0       	ldi	r25, 0x00	; 0
+     e28:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
+     e2c:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+
+00000e30 <.L68>:
         if (knopy == 5 && (PINB & (1 << PB0))){ymotoruit(); ybereikt = 1;}
-     e28:	89 81       	ldd	r24, Y+1	; 0x01
-     e2a:	9a 81       	ldd	r25, Y+2	; 0x02
-     e2c:	85 30       	cpi	r24, 0x05	; 5
-     e2e:	91 05       	cpc	r25, r1
-     e30:	91 f4       	brne	.+36     	; 0xe56 <.L64>
-
-00000e32 <.Loc.428>:
-     e32:	83 e2       	ldi	r24, 0x23	; 35
-     e34:	90 e0       	ldi	r25, 0x00	; 0
-     e36:	fc 01       	movw	r30, r24
-     e38:	80 81       	ld	r24, Z
+     e30:	89 81       	ldd	r24, Y+1	; 0x01
+     e32:	9a 81       	ldd	r25, Y+2	; 0x02
+     e34:	85 30       	cpi	r24, 0x05	; 5
+     e36:	91 05       	cpc	r25, r1
+     e38:	91 f4       	brne	.+36     	; 0xe5e <.L64>
 
 00000e3a <.Loc.429>:
-     e3a:	88 2f       	mov	r24, r24
+     e3a:	83 e2       	ldi	r24, 0x23	; 35
      e3c:	90 e0       	ldi	r25, 0x00	; 0
-     e3e:	81 70       	andi	r24, 0x01	; 1
-     e40:	99 27       	eor	r25, r25
+     e3e:	fc 01       	movw	r30, r24
+     e40:	80 81       	ld	r24, Z
 
 00000e42 <.Loc.430>:
-     e42:	00 97       	sbiw	r24, 0x00	; 0
-     e44:	41 f0       	breq	.+16     	; 0xe56 <.L64>
+     e42:	88 2f       	mov	r24, r24
+     e44:	90 e0       	ldi	r25, 0x00	; 0
+     e46:	81 70       	andi	r24, 0x01	; 1
+     e48:	99 27       	eor	r25, r25
 
-00000e46 <.Loc.431>:
-     e46:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
+00000e4a <.Loc.431>:
+     e4a:	00 97       	sbiw	r24, 0x00	; 0
+     e4c:	41 f0       	breq	.+16     	; 0xe5e <.L64>
 
-00000e4a <.Loc.432>:
-     e4a:	81 e0       	ldi	r24, 0x01	; 1
-     e4c:	90 e0       	ldi	r25, 0x00	; 0
-     e4e:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
-     e52:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+00000e4e <.Loc.432>:
+     e4e:	0e 94 23 02 	call	0x446	; 0x446 <ymotoruit>
 
-00000e56 <.L64>:
+00000e52 <.Loc.433>:
+     e52:	81 e0       	ldi	r24, 0x01	; 1
+     e54:	90 e0       	ldi	r25, 0x00	; 0
+     e56:	90 93 82 02 	sts	0x0282, r25	; 0x800282 <ybereikt+0x1>
+     e5a:	80 93 81 02 	sts	0x0281, r24	; 0x800281 <ybereikt>
+
+00000e5e <.L64>:
         while(ybereikt == 0)
-     e56:	80 91 81 02 	lds	r24, 0x0281	; 0x800281 <ybereikt>
-     e5a:	90 91 82 02 	lds	r25, 0x0282	; 0x800282 <ybereikt+0x1>
-     e5e:	00 97       	sbiw	r24, 0x00	; 0
-     e60:	09 f4       	brne	.+2      	; 0xe64 <.Loc.434>
+     e5e:	80 91 81 02 	lds	r24, 0x0281	; 0x800281 <ybereikt>
+     e62:	90 91 82 02 	lds	r25, 0x0282	; 0x800282 <ybereikt+0x1>
+     e66:	00 97       	sbiw	r24, 0x00	; 0
+     e68:	09 f4       	brne	.+2      	; 0xe6c <.Loc.435>
 
-00000e62 <L0^A>:
-     e62:	84 cf       	rjmp	.-248    	; 0xd6c <.L70>
+00000e6a <L0^A>:
+     e6a:	84 cf       	rjmp	.-248    	; 0xd74 <.L70>
 
-00000e64 <.Loc.434>:
+00000e6c <.Loc.435>:
         }
 
         vorigestaatknopy = knopy;
-     e64:	89 81       	ldd	r24, Y+1	; 0x01
-     e66:	9a 81       	ldd	r25, Y+2	; 0x02
-     e68:	90 93 86 02 	sts	0x0286, r25	; 0x800286 <vorigestaatknopy.0+0x1>
-     e6c:	80 93 85 02 	sts	0x0285, r24	; 0x800285 <vorigestaatknopy.0>
+     e6c:	89 81       	ldd	r24, Y+1	; 0x01
+     e6e:	9a 81       	ldd	r25, Y+2	; 0x02
+     e70:	90 93 86 02 	sts	0x0286, r25	; 0x800286 <vorigestaatknopy.0+0x1>
+     e74:	80 93 85 02 	sts	0x0285, r24	; 0x800285 <vorigestaatknopy.0>
 
-00000e70 <.L71>:
+00000e78 <.L71>:
     }
 
 }
-     e70:	00 00       	nop
-     e72:	e6 96       	adiw	r28, 0x36	; 54
-     e74:	0f b6       	in	r0, 0x3f	; 63
-     e76:	f8 94       	cli
-     e78:	de bf       	out	0x3e, r29	; 62
-     e7a:	0f be       	out	0x3f, r0	; 63
-     e7c:	cd bf       	out	0x3d, r28	; 61
-     e7e:	df 91       	pop	r29
-     e80:	cf 91       	pop	r28
-     e82:	08 95       	ret
+     e78:	00 00       	nop
+     e7a:	e6 96       	adiw	r28, 0x36	; 54
+     e7c:	0f b6       	in	r0, 0x3f	; 63
+     e7e:	f8 94       	cli
+     e80:	de bf       	out	0x3e, r29	; 62
+     e82:	0f be       	out	0x3f, r0	; 63
+     e84:	cd bf       	out	0x3d, r28	; 61
+     e86:	df 91       	pop	r29
+     e88:	cf 91       	pop	r28
+     e8a:	08 95       	ret
 
-00000e84 <bewegingzoppak>:
+00000e8c <bewegingzoppak>:
 
 void bewegingzoppak(void) // beweging met z as en magneet aan zetten om bakje op te pakken en naar boven te brengen.
 {
-     e84:	cf 93       	push	r28
-     e86:	df 93       	push	r29
-     e88:	00 d0       	rcall	.+0      	; 0xe8a <L0^A>
+     e8c:	cf 93       	push	r28
+     e8e:	df 93       	push	r29
+     e90:	00 d0       	rcall	.+0      	; 0xe92 <L0^A>
 
-00000e8a <L0^A>:
-     e8a:	00 d0       	rcall	.+0      	; 0xe8c <L0^A>
+00000e92 <L0^A>:
+     e92:	00 d0       	rcall	.+0      	; 0xe94 <L0^A>
 
-00000e8c <L0^A>:
-     e8c:	0f 92       	push	r0
-     e8e:	0f 92       	push	r0
-     e90:	cd b7       	in	r28, 0x3d	; 61
-     e92:	de b7       	in	r29, 0x3e	; 62
+00000e94 <L0^A>:
+     e94:	0f 92       	push	r0
+     e96:	0f 92       	push	r0
+     e98:	cd b7       	in	r28, 0x3d	; 61
+     e9a:	de b7       	in	r29, 0x3e	; 62
 
-00000e94 <.Loc.437>:
+00000e9c <.Loc.438>:
     int vorigestaatknopz = 0;
-     e94:	1a 82       	std	Y+2, r1	; 0x02
-     e96:	19 82       	std	Y+1, r1	; 0x01
-
-00000e98 <.Loc.438>:
-    int knopz0 = 1;
-     e98:	81 e0       	ldi	r24, 0x01	; 1
-     e9a:	90 e0       	ldi	r25, 0x00	; 0
-     e9c:	9e 83       	std	Y+6, r25	; 0x06
-     e9e:	8d 83       	std	Y+5, r24	; 0x05
+     e9c:	1a 82       	std	Y+2, r1	; 0x02
+     e9e:	19 82       	std	Y+1, r1	; 0x01
 
 00000ea0 <.Loc.439>:
-    int knopz1 = 1;
+    int knopz0 = 1;
      ea0:	81 e0       	ldi	r24, 0x01	; 1
      ea2:	90 e0       	ldi	r25, 0x00	; 0
-     ea4:	98 87       	std	Y+8, r25	; 0x08
-     ea6:	8f 83       	std	Y+7, r24	; 0x07
+     ea4:	9e 83       	std	Y+6, r25	; 0x06
+     ea6:	8d 83       	std	Y+5, r24	; 0x05
 
 00000ea8 <.Loc.440>:
-    int eenkeer = 0;
-     ea8:	1c 82       	std	Y+4, r1	; 0x04
-     eaa:	1b 82       	std	Y+3, r1	; 0x03
+    int knopz1 = 1;
+     ea8:	81 e0       	ldi	r24, 0x01	; 1
+     eaa:	90 e0       	ldi	r25, 0x00	; 0
+     eac:	98 87       	std	Y+8, r25	; 0x08
+     eae:	8f 83       	std	Y+7, r24	; 0x07
 
-00000eac <.Loc.441>:
-    if ((vorigestaatknopz == 0) && (eenkeer == 0))
-     eac:	89 81       	ldd	r24, Y+1	; 0x01
-     eae:	9a 81       	ldd	r25, Y+2	; 0x02
-     eb0:	00 97       	sbiw	r24, 0x00	; 0
-     eb2:	c1 f4       	brne	.+48     	; 0xee4 <.L73>
+00000eb0 <.Loc.441>:
+    int eenkeer = 0;
+     eb0:	1c 82       	std	Y+4, r1	; 0x04
+     eb2:	1b 82       	std	Y+3, r1	; 0x03
 
 00000eb4 <.Loc.442>:
-     eb4:	8b 81       	ldd	r24, Y+3	; 0x03
-     eb6:	9c 81       	ldd	r25, Y+4	; 0x04
+    if ((vorigestaatknopz == 0) && (eenkeer == 0))
+     eb4:	89 81       	ldd	r24, Y+1	; 0x01
+     eb6:	9a 81       	ldd	r25, Y+2	; 0x02
      eb8:	00 97       	sbiw	r24, 0x00	; 0
-     eba:	a1 f4       	brne	.+40     	; 0xee4 <.L73>
+     eba:	c1 f4       	brne	.+48     	; 0xeec <.L73>
 
 00000ebc <.Loc.443>:
+     ebc:	8b 81       	ldd	r24, Y+3	; 0x03
+     ebe:	9c 81       	ldd	r25, Y+4	; 0x04
+     ec0:	00 97       	sbiw	r24, 0x00	; 0
+     ec2:	a1 f4       	brne	.+40     	; 0xeec <.L73>
+
+00000ec4 <.Loc.444>:
     {
         zmotorpositief();
-     ebc:	0e 94 72 02 	call	0x4e4	; 0x4e4 <zmotorpositief>
+     ec4:	0e 94 72 02 	call	0x4e4	; 0x4e4 <zmotorpositief>
 
-00000ec0 <.Loc.444>:
+00000ec8 <.Loc.445>:
         if(knopz1 == 1)
-     ec0:	8f 81       	ldd	r24, Y+7	; 0x07
-     ec2:	98 85       	ldd	r25, Y+8	; 0x08
-     ec4:	81 30       	cpi	r24, 0x01	; 1
-     ec6:	91 05       	cpc	r25, r1
-     ec8:	69 f4       	brne	.+26     	; 0xee4 <.L73>
+     ec8:	8f 81       	ldd	r24, Y+7	; 0x07
+     eca:	98 85       	ldd	r25, Y+8	; 0x08
+     ecc:	81 30       	cpi	r24, 0x01	; 1
+     ece:	91 05       	cpc	r25, r1
+     ed0:	69 f4       	brne	.+26     	; 0xeec <.L73>
 
-00000eca <.Loc.445>:
+00000ed2 <.Loc.446>:
         {
         zmotoruit();
-     eca:	0e 94 9e 02 	call	0x53c	; 0x53c <zmotoruit>
+     ed2:	0e 94 9e 02 	call	0x53c	; 0x53c <zmotoruit>
 
-00000ece <.Loc.446>:
+00000ed6 <.Loc.447>:
         magneetaan();
-     ece:	0e 94 fe 02 	call	0x5fc	; 0x5fc <magneetaan>
-
-00000ed2 <.Loc.447>:
-        vorigestaatknopz = 1;
-     ed2:	81 e0       	ldi	r24, 0x01	; 1
-     ed4:	90 e0       	ldi	r25, 0x00	; 0
-     ed6:	9a 83       	std	Y+2, r25	; 0x02
-     ed8:	89 83       	std	Y+1, r24	; 0x01
+     ed6:	0e 94 fe 02 	call	0x5fc	; 0x5fc <magneetaan>
 
 00000eda <.Loc.448>:
-        eenkeer++;
-     eda:	8b 81       	ldd	r24, Y+3	; 0x03
-     edc:	9c 81       	ldd	r25, Y+4	; 0x04
-     ede:	01 96       	adiw	r24, 0x01	; 1
-     ee0:	9c 83       	std	Y+4, r25	; 0x04
-     ee2:	8b 83       	std	Y+3, r24	; 0x03
+        vorigestaatknopz = 1;
+     eda:	81 e0       	ldi	r24, 0x01	; 1
+     edc:	90 e0       	ldi	r25, 0x00	; 0
+     ede:	9a 83       	std	Y+2, r25	; 0x02
+     ee0:	89 83       	std	Y+1, r24	; 0x01
 
-00000ee4 <.L73>:
+00000ee2 <.Loc.449>:
+        eenkeer++;
+     ee2:	8b 81       	ldd	r24, Y+3	; 0x03
+     ee4:	9c 81       	ldd	r25, Y+4	; 0x04
+     ee6:	01 96       	adiw	r24, 0x01	; 1
+     ee8:	9c 83       	std	Y+4, r25	; 0x04
+     eea:	8b 83       	std	Y+3, r24	; 0x03
+
+00000eec <.L73>:
         }
     }
     if ((vorigestaatknopz == 1) && (eenkeer == 1))
-     ee4:	89 81       	ldd	r24, Y+1	; 0x01
-     ee6:	9a 81       	ldd	r25, Y+2	; 0x02
-     ee8:	81 30       	cpi	r24, 0x01	; 1
-     eea:	91 05       	cpc	r25, r1
-     eec:	81 f4       	brne	.+32     	; 0xf0e <.L75>
+     eec:	89 81       	ldd	r24, Y+1	; 0x01
+     eee:	9a 81       	ldd	r25, Y+2	; 0x02
+     ef0:	81 30       	cpi	r24, 0x01	; 1
+     ef2:	91 05       	cpc	r25, r1
+     ef4:	81 f4       	brne	.+32     	; 0xf16 <.L75>
 
-00000eee <.Loc.450>:
-     eee:	8b 81       	ldd	r24, Y+3	; 0x03
-     ef0:	9c 81       	ldd	r25, Y+4	; 0x04
-     ef2:	81 30       	cpi	r24, 0x01	; 1
-     ef4:	91 05       	cpc	r25, r1
-     ef6:	59 f4       	brne	.+22     	; 0xf0e <.L75>
+00000ef6 <.Loc.451>:
+     ef6:	8b 81       	ldd	r24, Y+3	; 0x03
+     ef8:	9c 81       	ldd	r25, Y+4	; 0x04
+     efa:	81 30       	cpi	r24, 0x01	; 1
+     efc:	91 05       	cpc	r25, r1
+     efe:	59 f4       	brne	.+22     	; 0xf16 <.L75>
 
-00000ef8 <.Loc.451>:
+00000f00 <.Loc.452>:
     {
         zmotornegatief();
-     ef8:	0e 94 b8 02 	call	0x570	; 0x570 <zmotornegatief>
+     f00:	0e 94 b8 02 	call	0x570	; 0x570 <zmotornegatief>
 
-00000efc <.Loc.452>:
+00000f04 <.Loc.453>:
         if(knopz0 == 1)
-     efc:	8d 81       	ldd	r24, Y+5	; 0x05
-     efe:	9e 81       	ldd	r25, Y+6	; 0x06
-     f00:	81 30       	cpi	r24, 0x01	; 1
-     f02:	91 05       	cpc	r25, r1
-     f04:	21 f4       	brne	.+8      	; 0xf0e <.L75>
+     f04:	8d 81       	ldd	r24, Y+5	; 0x05
+     f06:	9e 81       	ldd	r25, Y+6	; 0x06
+     f08:	81 30       	cpi	r24, 0x01	; 1
+     f0a:	91 05       	cpc	r25, r1
+     f0c:	21 f4       	brne	.+8      	; 0xf16 <.L75>
 
-00000f06 <.Loc.453>:
+00000f0e <.Loc.454>:
         {
         zmotoruit();
-     f06:	0e 94 9e 02 	call	0x53c	; 0x53c <zmotoruit>
+     f0e:	0e 94 9e 02 	call	0x53c	; 0x53c <zmotoruit>
 
-00000f0a <.Loc.454>:
+00000f12 <.Loc.455>:
         vorigestaatknopz = 0;
-     f0a:	1a 82       	std	Y+2, r1	; 0x02
-     f0c:	19 82       	std	Y+1, r1	; 0x01
+     f12:	1a 82       	std	Y+2, r1	; 0x02
+     f14:	19 82       	std	Y+1, r1	; 0x01
 
-00000f0e <.L75>:
+00000f16 <.L75>:
         }
 
     }
 }
-     f0e:	00 00       	nop
-     f10:	28 96       	adiw	r28, 0x08	; 8
-     f12:	0f b6       	in	r0, 0x3f	; 63
-     f14:	f8 94       	cli
-     f16:	de bf       	out	0x3e, r29	; 62
-     f18:	0f be       	out	0x3f, r0	; 63
-     f1a:	cd bf       	out	0x3d, r28	; 61
-     f1c:	df 91       	pop	r29
-     f1e:	cf 91       	pop	r28
-     f20:	08 95       	ret
+     f16:	00 00       	nop
+     f18:	28 96       	adiw	r28, 0x08	; 8
+     f1a:	0f b6       	in	r0, 0x3f	; 63
+     f1c:	f8 94       	cli
+     f1e:	de bf       	out	0x3e, r29	; 62
+     f20:	0f be       	out	0x3f, r0	; 63
+     f22:	cd bf       	out	0x3d, r28	; 61
+     f24:	df 91       	pop	r29
+     f26:	cf 91       	pop	r28
+     f28:	08 95       	ret
 
-00000f22 <bewegingzneerzet>:
+00000f2a <bewegingzneerzet>:
 
 
 
 void bewegingzneerzet(void) // beweging met z as en magneet uit zetten om bakje neer te zetten en arm weer terug naar start positie
 {
-     f22:	cf 93       	push	r28
-     f24:	df 93       	push	r29
-     f26:	00 d0       	rcall	.+0      	; 0xf28 <L0^A>
+     f2a:	cf 93       	push	r28
+     f2c:	df 93       	push	r29
+     f2e:	00 d0       	rcall	.+0      	; 0xf30 <L0^A>
 
-00000f28 <L0^A>:
-     f28:	00 d0       	rcall	.+0      	; 0xf2a <L0^A>
+00000f30 <L0^A>:
+     f30:	00 d0       	rcall	.+0      	; 0xf32 <L0^A>
 
-00000f2a <L0^A>:
-     f2a:	0f 92       	push	r0
-     f2c:	0f 92       	push	r0
-     f2e:	cd b7       	in	r28, 0x3d	; 61
-     f30:	de b7       	in	r29, 0x3e	; 62
+00000f32 <L0^A>:
+     f32:	0f 92       	push	r0
+     f34:	0f 92       	push	r0
+     f36:	cd b7       	in	r28, 0x3d	; 61
+     f38:	de b7       	in	r29, 0x3e	; 62
 
-00000f32 <.Loc.457>:
+00000f3a <.Loc.458>:
     int vorigestaatknopz = 0;
-     f32:	1a 82       	std	Y+2, r1	; 0x02
-     f34:	19 82       	std	Y+1, r1	; 0x01
-
-00000f36 <.Loc.458>:
-    int knopz0 = 1;
-     f36:	81 e0       	ldi	r24, 0x01	; 1
-     f38:	90 e0       	ldi	r25, 0x00	; 0
-     f3a:	9e 83       	std	Y+6, r25	; 0x06
-     f3c:	8d 83       	std	Y+5, r24	; 0x05
+     f3a:	1a 82       	std	Y+2, r1	; 0x02
+     f3c:	19 82       	std	Y+1, r1	; 0x01
 
 00000f3e <.Loc.459>:
-    int knopz1 = 1;
+    int knopz0 = 1;
      f3e:	81 e0       	ldi	r24, 0x01	; 1
      f40:	90 e0       	ldi	r25, 0x00	; 0
-     f42:	98 87       	std	Y+8, r25	; 0x08
-     f44:	8f 83       	std	Y+7, r24	; 0x07
+     f42:	9e 83       	std	Y+6, r25	; 0x06
+     f44:	8d 83       	std	Y+5, r24	; 0x05
 
 00000f46 <.Loc.460>:
-    int eenkeer = 0;
-     f46:	1c 82       	std	Y+4, r1	; 0x04
-     f48:	1b 82       	std	Y+3, r1	; 0x03
+    int knopz1 = 1;
+     f46:	81 e0       	ldi	r24, 0x01	; 1
+     f48:	90 e0       	ldi	r25, 0x00	; 0
+     f4a:	98 87       	std	Y+8, r25	; 0x08
+     f4c:	8f 83       	std	Y+7, r24	; 0x07
 
-00000f4a <.Loc.461>:
-    if ((vorigestaatknopz == 0) && (eenkeer == 0))
-     f4a:	89 81       	ldd	r24, Y+1	; 0x01
-     f4c:	9a 81       	ldd	r25, Y+2	; 0x02
-     f4e:	00 97       	sbiw	r24, 0x00	; 0
-     f50:	c1 f4       	brne	.+48     	; 0xf82 <.L77>
+00000f4e <.Loc.461>:
+    int eenkeer = 0;
+     f4e:	1c 82       	std	Y+4, r1	; 0x04
+     f50:	1b 82       	std	Y+3, r1	; 0x03
 
 00000f52 <.Loc.462>:
-     f52:	8b 81       	ldd	r24, Y+3	; 0x03
-     f54:	9c 81       	ldd	r25, Y+4	; 0x04
+    if ((vorigestaatknopz == 0) && (eenkeer == 0))
+     f52:	89 81       	ldd	r24, Y+1	; 0x01
+     f54:	9a 81       	ldd	r25, Y+2	; 0x02
      f56:	00 97       	sbiw	r24, 0x00	; 0
-     f58:	a1 f4       	brne	.+40     	; 0xf82 <.L77>
+     f58:	c1 f4       	brne	.+48     	; 0xf8a <.L77>
 
 00000f5a <.Loc.463>:
+     f5a:	8b 81       	ldd	r24, Y+3	; 0x03
+     f5c:	9c 81       	ldd	r25, Y+4	; 0x04
+     f5e:	00 97       	sbiw	r24, 0x00	; 0
+     f60:	a1 f4       	brne	.+40     	; 0xf8a <.L77>
+
+00000f62 <.Loc.464>:
     {
         zmotorpositief();
-     f5a:	0e 94 72 02 	call	0x4e4	; 0x4e4 <zmotorpositief>
+     f62:	0e 94 72 02 	call	0x4e4	; 0x4e4 <zmotorpositief>
 
-00000f5e <.Loc.464>:
+00000f66 <.Loc.465>:
         if(knopz1 == 1)
-     f5e:	8f 81       	ldd	r24, Y+7	; 0x07
-     f60:	98 85       	ldd	r25, Y+8	; 0x08
-     f62:	81 30       	cpi	r24, 0x01	; 1
-     f64:	91 05       	cpc	r25, r1
-     f66:	69 f4       	brne	.+26     	; 0xf82 <.L77>
+     f66:	8f 81       	ldd	r24, Y+7	; 0x07
+     f68:	98 85       	ldd	r25, Y+8	; 0x08
+     f6a:	81 30       	cpi	r24, 0x01	; 1
+     f6c:	91 05       	cpc	r25, r1
+     f6e:	69 f4       	brne	.+26     	; 0xf8a <.L77>
 
-00000f68 <.Loc.465>:
+00000f70 <.Loc.466>:
         {
         zmotoruit();
-     f68:	0e 94 9e 02 	call	0x53c	; 0x53c <zmotoruit>
+     f70:	0e 94 9e 02 	call	0x53c	; 0x53c <zmotoruit>
 
-00000f6c <.Loc.466>:
+00000f74 <.Loc.467>:
         magneetuit();
-     f6c:	0e 94 0f 03 	call	0x61e	; 0x61e <magneetuit>
-
-00000f70 <.Loc.467>:
-        vorigestaatknopz = 1;
-     f70:	81 e0       	ldi	r24, 0x01	; 1
-     f72:	90 e0       	ldi	r25, 0x00	; 0
-     f74:	9a 83       	std	Y+2, r25	; 0x02
-     f76:	89 83       	std	Y+1, r24	; 0x01
+     f74:	0e 94 0f 03 	call	0x61e	; 0x61e <magneetuit>
 
 00000f78 <.Loc.468>:
-        eenkeer++;
-     f78:	8b 81       	ldd	r24, Y+3	; 0x03
-     f7a:	9c 81       	ldd	r25, Y+4	; 0x04
-     f7c:	01 96       	adiw	r24, 0x01	; 1
-     f7e:	9c 83       	std	Y+4, r25	; 0x04
-     f80:	8b 83       	std	Y+3, r24	; 0x03
+        vorigestaatknopz = 1;
+     f78:	81 e0       	ldi	r24, 0x01	; 1
+     f7a:	90 e0       	ldi	r25, 0x00	; 0
+     f7c:	9a 83       	std	Y+2, r25	; 0x02
+     f7e:	89 83       	std	Y+1, r24	; 0x01
 
-00000f82 <.L77>:
+00000f80 <.Loc.469>:
+        eenkeer++;
+     f80:	8b 81       	ldd	r24, Y+3	; 0x03
+     f82:	9c 81       	ldd	r25, Y+4	; 0x04
+     f84:	01 96       	adiw	r24, 0x01	; 1
+     f86:	9c 83       	std	Y+4, r25	; 0x04
+     f88:	8b 83       	std	Y+3, r24	; 0x03
+
+00000f8a <.L77>:
         }
     }
     if ((vorigestaatknopz == 1) && (eenkeer == 1))
-     f82:	89 81       	ldd	r24, Y+1	; 0x01
-     f84:	9a 81       	ldd	r25, Y+2	; 0x02
-     f86:	81 30       	cpi	r24, 0x01	; 1
-     f88:	91 05       	cpc	r25, r1
-     f8a:	81 f4       	brne	.+32     	; 0xfac <.L79>
+     f8a:	89 81       	ldd	r24, Y+1	; 0x01
+     f8c:	9a 81       	ldd	r25, Y+2	; 0x02
+     f8e:	81 30       	cpi	r24, 0x01	; 1
+     f90:	91 05       	cpc	r25, r1
+     f92:	81 f4       	brne	.+32     	; 0xfb4 <.L79>
 
-00000f8c <.Loc.470>:
-     f8c:	8b 81       	ldd	r24, Y+3	; 0x03
-     f8e:	9c 81       	ldd	r25, Y+4	; 0x04
-     f90:	81 30       	cpi	r24, 0x01	; 1
-     f92:	91 05       	cpc	r25, r1
-     f94:	59 f4       	brne	.+22     	; 0xfac <.L79>
+00000f94 <.Loc.471>:
+     f94:	8b 81       	ldd	r24, Y+3	; 0x03
+     f96:	9c 81       	ldd	r25, Y+4	; 0x04
+     f98:	81 30       	cpi	r24, 0x01	; 1
+     f9a:	91 05       	cpc	r25, r1
+     f9c:	59 f4       	brne	.+22     	; 0xfb4 <.L79>
 
-00000f96 <.Loc.471>:
+00000f9e <.Loc.472>:
     {
         zmotornegatief();
-     f96:	0e 94 b8 02 	call	0x570	; 0x570 <zmotornegatief>
+     f9e:	0e 94 b8 02 	call	0x570	; 0x570 <zmotornegatief>
 
-00000f9a <.Loc.472>:
+00000fa2 <.Loc.473>:
         if(knopz0 == 1)
-     f9a:	8d 81       	ldd	r24, Y+5	; 0x05
-     f9c:	9e 81       	ldd	r25, Y+6	; 0x06
-     f9e:	81 30       	cpi	r24, 0x01	; 1
-     fa0:	91 05       	cpc	r25, r1
-     fa2:	21 f4       	brne	.+8      	; 0xfac <.L79>
+     fa2:	8d 81       	ldd	r24, Y+5	; 0x05
+     fa4:	9e 81       	ldd	r25, Y+6	; 0x06
+     fa6:	81 30       	cpi	r24, 0x01	; 1
+     fa8:	91 05       	cpc	r25, r1
+     faa:	21 f4       	brne	.+8      	; 0xfb4 <.L79>
 
-00000fa4 <.Loc.473>:
+00000fac <.Loc.474>:
         {
         zmotoruit();
-     fa4:	0e 94 9e 02 	call	0x53c	; 0x53c <zmotoruit>
+     fac:	0e 94 9e 02 	call	0x53c	; 0x53c <zmotoruit>
 
-00000fa8 <.Loc.474>:
+00000fb0 <.Loc.475>:
         vorigestaatknopz = 0;
-     fa8:	1a 82       	std	Y+2, r1	; 0x02
-     faa:	19 82       	std	Y+1, r1	; 0x01
+     fb0:	1a 82       	std	Y+2, r1	; 0x02
+     fb2:	19 82       	std	Y+1, r1	; 0x01
 
-00000fac <.L79>:
+00000fb4 <.L79>:
         }
 
     }
 }
-     fac:	00 00       	nop
-     fae:	28 96       	adiw	r28, 0x08	; 8
-     fb0:	0f b6       	in	r0, 0x3f	; 63
-     fb2:	f8 94       	cli
-     fb4:	de bf       	out	0x3e, r29	; 62
-     fb6:	0f be       	out	0x3f, r0	; 63
-     fb8:	cd bf       	out	0x3d, r28	; 61
-     fba:	df 91       	pop	r29
-     fbc:	cf 91       	pop	r28
-     fbe:	08 95       	ret
+     fb4:	00 00       	nop
+     fb6:	28 96       	adiw	r28, 0x08	; 8
+     fb8:	0f b6       	in	r0, 0x3f	; 63
+     fba:	f8 94       	cli
+     fbc:	de bf       	out	0x3e, r29	; 62
+     fbe:	0f be       	out	0x3f, r0	; 63
+     fc0:	cd bf       	out	0x3d, r28	; 61
+     fc2:	df 91       	pop	r29
+     fc4:	cf 91       	pop	r28
+     fc6:	08 95       	ret
 
-00000fc0 <main>:
+00000fc8 <main>:
 
 
 int main() //
 {
-     fc0:	cf 93       	push	r28
-     fc2:	df 93       	push	r29
-     fc4:	00 d0       	rcall	.+0      	; 0xfc6 <L0^A>
+     fc8:	cf 93       	push	r28
+     fca:	df 93       	push	r29
+     fcc:	0f 92       	push	r0
+     fce:	0f 92       	push	r0
+     fd0:	cd b7       	in	r28, 0x3d	; 61
+     fd2:	de b7       	in	r29, 0x3e	; 62
 
-00000fc6 <L0^A>:
-     fc6:	00 d0       	rcall	.+0      	; 0xfc8 <L0^A>
-
-00000fc8 <L0^A>:
-     fc8:	cd b7       	in	r28, 0x3d	; 61
-     fca:	de b7       	in	r29, 0x3e	; 62
-
-00000fcc <.Loc.477>:
+00000fd4 <.Loc.478>:
     confic();
-     fcc:	0e 94 2a 04 	call	0x854	; 0x854 <confic>
+     fd4:	0e 94 2e 04 	call	0x85c	; 0x85c <confic>
 
-00000fd0 <.Loc.478>:
+00000fd8 <.Loc.479>:
     mainhumaninterface();
-     fd0:	0e 94 ee 03 	call	0x7dc	; 0x7dc <mainhumaninterface>
-
-00000fd4 <.Loc.479>:
-
-    int LOCATIE1 = 25;
-     fd4:	89 e1       	ldi	r24, 0x19	; 25
-     fd6:	90 e0       	ldi	r25, 0x00	; 0
-     fd8:	9a 83       	std	Y+2, r25	; 0x02
-     fda:	89 83       	std	Y+1, r24	; 0x01
+     fd8:	0e 94 ee 03 	call	0x7dc	; 0x7dc <mainhumaninterface>
 
 00000fdc <.Loc.480>:
-    int LOCATIE2 = 21;
-     fdc:	85 e1       	ldi	r24, 0x15	; 21
-     fde:	90 e0       	ldi	r25, 0x00	; 0
-     fe0:	9c 83       	std	Y+4, r25	; 0x04
-     fe2:	8b 83       	std	Y+3, r24	; 0x03
-
-00000fe4 <.Loc.481>:
     int LOCATIE;
     while (START == 1)
-     fe4:	1c c0       	rjmp	.+56     	; 0x101e <.L81>
+     fdc:	20 c0       	rjmp	.+64     	; 0x101e <.L81>
 
-00000fe6 <.L82>:
+00000fde <.L82>:
     {
         LOCATIE = LOCATIE1;
-     fe6:	89 81       	ldd	r24, Y+1	; 0x01
-     fe8:	9a 81       	ldd	r25, Y+2	; 0x02
-     fea:	9e 83       	std	Y+6, r25	; 0x06
-     fec:	8d 83       	std	Y+5, r24	; 0x05
+     fde:	80 91 78 02 	lds	r24, 0x0278	; 0x800278 <LOCATIE1>
+     fe2:	90 91 79 02 	lds	r25, 0x0279	; 0x800279 <LOCATIE1+0x1>
+     fe6:	9a 83       	std	Y+2, r25	; 0x02
+     fe8:	89 83       	std	Y+1, r24	; 0x01
 
-00000fee <.Loc.483>:
+00000fea <.Loc.482>:
 
         bewegingx(LOCATIE);
-     fee:	8d 81       	ldd	r24, Y+5	; 0x05
-     ff0:	9e 81       	ldd	r25, Y+6	; 0x06
-     ff2:	0e 94 9e 04 	call	0x93c	; 0x93c <bewegingx>
+     fea:	89 81       	ldd	r24, Y+1	; 0x01
+     fec:	9a 81       	ldd	r25, Y+2	; 0x02
+     fee:	0e 94 a2 04 	call	0x944	; 0x944 <bewegingx>
 
-00000ff6 <.Loc.484>:
+00000ff2 <.Loc.483>:
         bewegingy(LOCATIE);
-     ff6:	8d 81       	ldd	r24, Y+5	; 0x05
-     ff8:	9e 81       	ldd	r25, Y+6	; 0x06
-     ffa:	0e 94 f0 05 	call	0xbe0	; 0xbe0 <bewegingy>
+     ff2:	89 81       	ldd	r24, Y+1	; 0x01
+     ff4:	9a 81       	ldd	r25, Y+2	; 0x02
+     ff6:	0e 94 f4 05 	call	0xbe8	; 0xbe8 <bewegingy>
+
+00000ffa <.Loc.484>:
+        bewegingzoppak();
+     ffa:	0e 94 46 07 	call	0xe8c	; 0xe8c <bewegingzoppak>
 
 00000ffe <.Loc.485>:
-        bewegingzoppak();
-     ffe:	0e 94 42 07 	call	0xe84	; 0xe84 <bewegingzoppak>
-
-00001002 <.Loc.486>:
 
 
         LOCATIE = LOCATIE2;
-    1002:	8b 81       	ldd	r24, Y+3	; 0x03
-    1004:	9c 81       	ldd	r25, Y+4	; 0x04
-    1006:	9e 83       	std	Y+6, r25	; 0x06
-    1008:	8d 83       	std	Y+5, r24	; 0x05
+     ffe:	80 91 7a 02 	lds	r24, 0x027A	; 0x80027a <LOCATIE2>
+    1002:	90 91 7b 02 	lds	r25, 0x027B	; 0x80027b <LOCATIE2+0x1>
+    1006:	9a 83       	std	Y+2, r25	; 0x02
+    1008:	89 83       	std	Y+1, r24	; 0x01
 
-0000100a <.Loc.487>:
+0000100a <.Loc.486>:
 
         bewegingx(LOCATIE);
-    100a:	8d 81       	ldd	r24, Y+5	; 0x05
-    100c:	9e 81       	ldd	r25, Y+6	; 0x06
-    100e:	0e 94 9e 04 	call	0x93c	; 0x93c <bewegingx>
+    100a:	89 81       	ldd	r24, Y+1	; 0x01
+    100c:	9a 81       	ldd	r25, Y+2	; 0x02
+    100e:	0e 94 a2 04 	call	0x944	; 0x944 <bewegingx>
 
-00001012 <.Loc.488>:
+00001012 <.Loc.487>:
         bewegingy(LOCATIE);
-    1012:	8d 81       	ldd	r24, Y+5	; 0x05
-    1014:	9e 81       	ldd	r25, Y+6	; 0x06
-    1016:	0e 94 f0 05 	call	0xbe0	; 0xbe0 <bewegingy>
+    1012:	89 81       	ldd	r24, Y+1	; 0x01
+    1014:	9a 81       	ldd	r25, Y+2	; 0x02
+    1016:	0e 94 f4 05 	call	0xbe8	; 0xbe8 <bewegingy>
 
-0000101a <.Loc.489>:
+0000101a <.Loc.488>:
         bewegingzneerzet();
-    101a:	0e 94 91 07 	call	0xf22	; 0xf22 <bewegingzneerzet>
+    101a:	0e 94 95 07 	call	0xf2a	; 0xf2a <bewegingzneerzet>
 
 0000101e <.L81>:
     while (START == 1)
@@ -3389,11 +3379,11 @@ int main() //
     1022:	90 91 11 02 	lds	r25, 0x0211	; 0x800211 <START+0x1>
     1026:	81 30       	cpi	r24, 0x01	; 1
     1028:	91 05       	cpc	r25, r1
-    102a:	e9 f2       	breq	.-70     	; 0xfe6 <.L82>
+    102a:	c9 f2       	breq	.-78     	; 0xfde <.L82>
     102c:	80 e0       	ldi	r24, 0x00	; 0
     102e:	90 e0       	ldi	r25, 0x00	; 0
 
-00001030 <.Loc.491>:
+00001030 <.Loc.490>:
 
 
     }
@@ -3401,16 +3391,12 @@ int main() //
 }
     1030:	0f 90       	pop	r0
     1032:	0f 90       	pop	r0
-    1034:	0f 90       	pop	r0
-    1036:	0f 90       	pop	r0
-    1038:	0f 90       	pop	r0
-    103a:	0f 90       	pop	r0
-    103c:	df 91       	pop	r29
-    103e:	cf 91       	pop	r28
-    1040:	08 95       	ret
+    1034:	df 91       	pop	r29
+    1036:	cf 91       	pop	r28
+    1038:	08 95       	ret
 
-00001042 <_exit>:
-    1042:	f8 94       	cli
+0000103a <_exit>:
+    103a:	f8 94       	cli
 
-00001044 <__stop_program>:
-    1044:	ff cf       	rjmp	.-2      	; 0x1044 <__stop_program>
+0000103c <__stop_program>:
+    103c:	ff cf       	rjmp	.-2      	; 0x103c <__stop_program>
