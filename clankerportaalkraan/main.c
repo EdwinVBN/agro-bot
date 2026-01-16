@@ -201,9 +201,6 @@ int main() //
 {
     confic();
     mainhumaninterface();
-
-    int LOCATIE1 = 25;
-    int LOCATIE2 = 21;
     int LOCATIE;
     while (START == 1)
     {
