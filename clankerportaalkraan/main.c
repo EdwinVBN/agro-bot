@@ -200,6 +200,7 @@ void bewegingzneerzet(void) // beweging met z as en magneet uit zetten om bakje 
 int main() //
 {
     confic();
+    mainhumaninterface();
 
     int LOCATIE1 = 25;
     int LOCATIE2 = 21;

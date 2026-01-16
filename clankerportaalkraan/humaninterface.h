@@ -72,6 +72,7 @@ void verwerkToets(char t)
 //main
 int mainhumaninterface(void) // display code
 {
+    int i = 1;
 
     DDRA = 0x7F;      // output
 
@@ -79,12 +80,17 @@ int mainhumaninterface(void) // display code
     DDRK = 0x0F;      // output rijen
     PORTK = 0xF0;     // pull-up van kolommen
 
-    while (1)
+    while (i)
     {
         toets = scanKeypad();
         if (toets != 0)
         {
             verwerkToets(toets);
+        }
+
+        if (PINK & (1 << PK6))
+        {
+            i = 0;
         }
     }
 }
