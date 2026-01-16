@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1763461946 source:c:\users\mfade\documents\github\clanker\clankerportaalkraan\fuse.c
+	<avr/io.h>
+
+1768579008 source:c:\users\mfade\documents\github\clanker\clankerportaalkraan\main.c
+	<avr/io.h>
+	"motorconfic.h"
+	"motoraansturing.h"
+	"magneet.h"
+	"humaninterface.h"
+
+1768579218 c:\users\mfade\documents\github\clanker\clankerportaalkraan\motorconfic.h
+
+1768579258 c:\users\mfade\documents\github\clanker\clankerportaalkraan\motoraansturing.h
+
+1768579172 c:\users\mfade\documents\github\clanker\clankerportaalkraan\magneet.h
+
+1768579306 c:\users\mfade\documents\github\clanker\clankerportaalkraan\humaninterface.h
+	<avr/io.h>
+

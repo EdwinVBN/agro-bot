@@ -53,9 +53,13 @@
 		<Unit filename="fuse.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="humaninterface.h" />
+		<Unit filename="magneet.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="motoraansturing.h" />
+		<Unit filename="motorconfic.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
