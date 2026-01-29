@@ -2,7 +2,7 @@
 1763461946 source:c:\users\mfade\documents\github\clanker\clankerportaalkraan\fuse.c
 	<avr/io.h>
 
-1768579008 source:c:\users\mfade\documents\github\clanker\clankerportaalkraan\main.c
+1768589134 source:c:\users\mfade\documents\github\clanker\clankerportaalkraan\main.c
 	<avr/io.h>
 	"motorconfic.h"
 	"motoraansturing.h"
@@ -15,6 +15,6 @@
 
 1768579172 c:\users\mfade\documents\github\clanker\clankerportaalkraan\magneet.h
 
-1768588952 c:\users\mfade\documents\github\clanker\clankerportaalkraan\humaninterface.h
+1768644290 c:\users\mfade\documents\github\clanker\clankerportaalkraan\humaninterface.h
 	<avr/io.h>
 
