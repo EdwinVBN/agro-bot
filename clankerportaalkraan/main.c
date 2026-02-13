@@ -111,7 +111,7 @@ ISR(PCINT0_vect)
     uint16_t now = millisec;
 
     if ((now - last_pcint_time) < DEBOUNCE_MS)
-        return;                     // te snel → bounce
+        return;
 
     last_pcint_time = now;
 
@@ -126,10 +126,10 @@ ISR(PCINT0_vect)
 
 void timer0config(void)
 {
-    TCCR0A = (1 << WGM01);          // CTC mode
+    TCCR0A = (1 << WGM01);                       // CTC mode
     TCCR0B = (1 << CS01) | (1 << CS00); // prescaler 64
-    OCR0A = 249;                   // 1 ms @ 16 MHz
-    TIMSK0 |= (1 << OCIE0A);        // compare interrupt
+    OCR0A = 249;                                               // 1 ms / 16 MHz
+    TIMSK0 |= (1 << OCIE0A);                       // compare interrupt
 
 }
 
@@ -173,13 +173,13 @@ void yknoppenconfig(void)
 
 void zmotorconfig(void)
 {
-    /* H-brug PORTS als OUTPUT instellen*/
+    //  H-brug PORTS als OUTPUT instellen
     DDR_R_EN_Z |= (1 << R_EN_Z);
     DDR_L_EN_Z |= (1 << L_EN_Z);
     DDR_R_PWM_Z |= (1 << R_PWM_Z);
     DDR_L_PWM_Z |= (1 << L_PWM_Z);
 
-    /* Alles uit bij start */
+    // Alles uit bij start
     PORT_R_EN_Z &= ~(1 << R_EN_Z);
     PORT_L_EN_Z &= ~(1 << L_EN_Z);
     PORT_R_PWM_Z &= ~(1 << R_PWM_Z);
@@ -188,13 +188,13 @@ void zmotorconfig(void)
 
 void ymotorconfig(void)
 {
-    /* H-brug PORTS als OUTPUT instellen*/
+    // H-brug PORTS als OUTPUT instellen
     DDR_R_EN_Y |= (1 << R_EN_Y);
     DDR_L_EN_Y |= (1 << L_EN_Y);
     DDR_R_PWM_Y |= (1 << R_PWM_Y);
     DDR_L_PWM_Y |= (1 << L_PWM_Y);
 
-    /* Alles uit bij start */
+    //  Alles uit bij start
     PORT_R_EN_Y &= ~(1 << R_EN_Y);
     PORT_L_EN_Y &= ~(1 << L_EN_Y);
     PORT_R_PWM_Y &= ~(1 << R_PWM_Y);
@@ -218,57 +218,56 @@ void magneetuit(void)
 
 void ymotorpositief(void)
 {
-    /* MOTOR AAN (negatief) */
-        PORT_R_EN_Y |= (1 << R_EN_Y);   // R_EN = 1
-        PORT_L_EN_Y |= (1 << L_EN_Y);   // L_EN = 1
-        PORT_R_PWM_Y |= (1 << R_PWM_Y);   // RPWM = 1
-        PORT_L_PWM_Y &= ~(1 << L_PWM_Y);  // LPWM = 0
+    // MOTOR AAN (positief)
+        PORT_R_EN_Y |= (1 << R_EN_Y);                 // R_EN = 1
+        PORT_L_EN_Y |= (1 << L_EN_Y);                 // L_EN = 1
+        PORT_R_PWM_Y |= (1 << R_PWM_Y);      // R_PWM = 1
+        PORT_L_PWM_Y &= ~(1 << L_PWM_Y);  // L_PWM = 0
 }
 
 void ymotoruit(void)
 {
-      /* MOTOR UIT */
-        PORT_R_EN_Y &= ~(1 << R_EN_Y);
-        PORT_L_EN_Y &= ~(1 << L_EN_Y); // enables uit
-        PORT_R_PWM_Y &= ~(1 << R_PWM_Y);
-        PORT_L_PWM_Y &= ~(1 << L_PWM_Y); // richtingen uit
+      // MOTOR UIT
+        PORT_R_EN_Y &= ~(1 << R_EN_Y);                // R_EN = 0
+        PORT_L_EN_Y &= ~(1 << L_EN_Y);                 // L_EN = 0
+        PORT_R_PWM_Y &= ~(1 << R_PWM_Y);     // R_PWM = 0
+        PORT_L_PWM_Y &= ~(1 << L_PWM_Y);      // L_PWM = 0
 }
-
 void ymotornegatief(void)
 {
-    /*MOTOR AAN (positief)*/
-        PORT_R_EN_Y |= (1 << R_EN_Y);   // R_EN = 1
-        PORT_L_EN_Y |= (1 << L_EN_Y);   // L_EN = 1
-        PORT_R_PWM_Y &= ~(1 << R_PWM_Y);   // RPWM = 1
-        PORT_L_PWM_Y |= (1 << L_PWM_Y);  // LPWM = 0
+    // MOTOR AAN (negatief)
+        PORT_R_EN_Y |= (1 << R_EN_Y);                   // R_EN = 1
+        PORT_L_EN_Y |= (1 << L_EN_Y);                   // L_EN = 1
+        PORT_R_PWM_Y &= ~(1 << R_PWM_Y);   // R_PWM = 1
+        PORT_L_PWM_Y |= (1 << L_PWM_Y);        // L_PWM = 0
 
 }
 
 void zmotorpositief(void)
 {
-    /* MOTOR AAN (positief) */
-        PORT_R_EN_Z |= (1 << R_EN_Z);   // R_EN = 1
-        PORT_L_EN_Z |= (1 << L_EN_Z);   // L_EN = 1
-        PORT_R_PWM_Z |= (1 << R_PWM_Z);   // RPWM = 1
-        PORT_L_PWM_Z &= ~(1 << L_PWM_Z);  // LPWM = 0
+    //  MOTOR AAN (positief)
+        PORT_R_EN_Z |= (1 << R_EN_Z);                  // R_EN = 1
+        PORT_L_EN_Z |= (1 << L_EN_Z);                  // L_EN = 1
+        PORT_R_PWM_Z |= (1 << R_PWM_Z);      // R_PWM = 1
+        PORT_L_PWM_Z &= ~(1 << L_PWM_Z);  // L_PWM = 0
 }
 
 void zmotoruit(void)
 {
-      /* MOTOR UIT */
-        PORT_R_EN_Z &= ~(1 << R_EN_Z);
-        PORT_L_EN_Z &= ~(1 << L_EN_Z); // enables uit
-        PORT_R_PWM_Z &= ~(1 << R_PWM_Z);
-        PORT_L_PWM_Z &= ~(1 << L_PWM_Z); // richtingen uit
+      // MOTOR UIT
+        PORT_R_EN_Z &= ~(1 << R_EN_Z);           // R_EN = 0
+        PORT_L_EN_Z &= ~(1 << L_EN_Z);            // L_EN = 0
+        PORT_R_PWM_Z &= ~(1 << R_PWM_Z); // R_PWM = 0
+        PORT_L_PWM_Z &= ~(1 << L_PWM_Z);  // L_PWM = 0
 }
 
 void zmotornegatief(void)
 {
-    /*MOTOR AAN (negatief)*/
-        PORT_R_EN_Z |= (1 << R_EN_Z);   // R_EN = 1
-        PORT_L_EN_Z |= (1 << L_EN_Z);   // L_EN = 1
-        PORT_R_PWM_Z &= ~(1 << R_PWM_Z);   // RPWM = 1
-        PORT_L_PWM_Z |= (1 << L_PWM_Z);  // LPWM = 0
+    // MOTOR AAN (negatief)
+        PORT_R_EN_Z |= (1 << R_EN_Z);                   // R_EN = 1
+        PORT_L_EN_Z |= (1 << L_EN_Z);                    // L_EN = 1
+        PORT_R_PWM_Z &= ~(1 << R_PWM_Z);    // RPWM = 1
+        PORT_L_PWM_Z |= (1 << L_PWM_Z);         // LPWM = 0
 
 }
 
